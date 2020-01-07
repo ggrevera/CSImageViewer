@@ -1,0 +1,504 @@
+\section{CSImage\-Viewer Class Reference}
+\label{class_c_s_image_viewer_1_1_c_s_image_viewer}\index{CSImageViewer::CSImageViewer@{CSImageViewer::CSImageViewer}}
+Instantiate this class to display an image. v4.1 adds support for drag-and-drop of input files.  
+
+
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+{\bf CSImage\-Viewer} ()
+\begin{CompactList}\small\item\em Ctor that simply creates an empty window. \item\end{CompactList}\item 
+{\bf CSImage\-Viewer} (String fname)
+\begin{CompactList}\small\item\em Ctor that creates a window that displays the specified image file. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Public Attributes}
+\begin{CompactItemize}
+\item 
+{\bf Image\-Data} {\bf m\-Image}
+\begin{CompactList}\small\item\em actual image data \item\end{CompactList}\end{CompactItemize}
+\subsection*{Protected Member Functions}
+\begin{CompactItemize}
+\item 
+override void {\bf Dispose} (bool disposing)
+\begin{CompactList}\small\item\em Clean up any resources being used. \item\end{CompactList}\item 
+override void {\bf On\-Paint} (Paint\-Event\-Args e)
+\begin{CompactList}\small\item\em redraw the panel contents. This method simply draws/displays the Image\-Data's display image. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Private Member Functions}
+\begin{CompactItemize}
+\item 
+void {\bf Initialize\-Component} ()
+\begin{CompactList}\small\item\em Required method for Designer support - do not modify the contents of this method with the code editor. \item\end{CompactList}\item 
+void {\bf On\-Mouse\-Moved} (object sender, Mouse\-Event\-Args e)
+\begin{CompactList}\small\item\em Track mouse movement. \item\end{CompactList}\item 
+void {\bf On\-File\-Open} (object sender, Event\-Args e)
+\begin{CompactList}\small\item\em Handle file-open. \item\end{CompactList}\item 
+void {\bf On\-File\-Save} (object sender, Event\-Args e)
+\begin{CompactList}\small\item\em Handle file-save. \item\end{CompactList}\item 
+void {\bf On\-File\-Save\-As} (object sender, Event\-Args e)
+\begin{CompactList}\small\item\em Handle file-saveas. \item\end{CompactList}\item 
+void {\bf On\-File\-Exit} (object sender, System.Event\-Args e)
+\begin{CompactList}\small\item\em Handle file-exit by exitting the application. \item\end{CompactList}\item 
+void {\bf On\-File\-Close} (object sender, Event\-Args e)
+\begin{CompactList}\small\item\em Handle file-close by closing this window. \item\end{CompactList}\item 
+void {\bf On\-Drag\-Drop} (object sender, Drag\-Event\-Args e)
+\begin{CompactList}\small\item\em Handle drag-and-drop of files by creating a new {\bf CSImage\-Viewer}{\rm (p.\,\pageref{class_c_s_image_viewer_1_1_c_s_image_viewer})} window for each. \item\end{CompactList}\item 
+void {\bf On\-Drag\-Enter} (object sender, Drag\-Event\-Args e)
+\begin{CompactList}\small\item\em Handle drag-enter (for drag-and-drop of files) by check each file name extension, and rejecting bad ones. \item\end{CompactList}\item 
+void {\bf save\-Recent} (String s)
+\begin{CompactList}\small\item\em add the file to the list of most recent files. \item\end{CompactList}\item 
+void {\bf load\-Recent} ()
+\begin{CompactList}\small\item\em set up the sub menu of most recent files. \item\end{CompactList}\item 
+void {\bf on\-Recent\-File} (object sender, Event\-Args e)
+\begin{CompactList}\small\item\em one of the most recent files was selected. create a viewer for it. \item\end{CompactList}\item 
+void {\bf On\-Scroll} (object sender, Scroll\-Event\-Args e)
+\begin{CompactList}\small\item\em scrolling. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Private Attributes}
+\begin{CompactItemize}
+\item 
+const String {\bf s\-Filter}
+\begin{CompactList}\small\item\em input file name filter string for image files \item\end{CompactList}\item 
+String[$\,$] {\bf m\-Extentions} = \{ \char`\"{}.bmp\char`\"{}, \char`\"{}.ico\char`\"{}, \char`\"{}.gif\char`\"{}, \char`\"{}.jpg\char`\"{}, \char`\"{}.png\char`\"{}, \char`\"{}.pnm\char`\"{}, \char`\"{}.ppm\char`\"{}, \char`\"{}.pgm\char`\"{}, \char`\"{}.tif\char`\"{}, \char`\"{}.tiff\char`\"{} \}
+\begin{CompactList}\small\item\em allowable input file name extensions (endings). keep lowercase! \item\end{CompactList}\item 
+Main\-Menu {\bf main\-Menu1}
+\begin{CompactList}\small\item\em menubar \item\end{CompactList}\item 
+Menu\-Item {\bf File\-Menu\-Item}
+\begin{CompactList}\small\item\em file menu item \item\end{CompactList}\item 
+Menu\-Item {\bf File\-Open}
+\begin{CompactList}\small\item\em open menu item \item\end{CompactList}\item 
+Menu\-Item {\bf File\-Save}
+\begin{CompactList}\small\item\em save menu item \item\end{CompactList}\item 
+Menu\-Item {\bf File\-Save\-As}
+\begin{CompactList}\small\item\em save as menu item \item\end{CompactList}\item 
+Menu\-Item {\bf menu\-Separator}
+\begin{CompactList}\small\item\em separator \item\end{CompactList}\item 
+Menu\-Item {\bf File\-Close}
+\begin{CompactList}\small\item\em close menu item \item\end{CompactList}\item 
+Menu\-Item {\bf File\-Exit}
+\begin{CompactList}\small\item\em exit menu item \item\end{CompactList}\item 
+double {\bf Zoom} = 1.0
+\begin{CompactList}\small\item\em zoom/scale factor \item\end{CompactList}\item 
+IContainer {\bf components}
+\begin{CompactList}\small\item\em do not use directly \item\end{CompactList}\item 
+bool {\bf m\-Mouse\-Move\-Valid} = false
+\begin{CompactList}\small\item\em is mouxe (x,y) below valid? \item\end{CompactList}\item 
+int {\bf m\-Mouse\-X}
+\begin{CompactList}\small\item\em mouse movement x position \item\end{CompactList}\item 
+int {\bf m\-Mouse\-Y}
+\begin{CompactList}\small\item\em mouse movement y position \item\end{CompactList}\item 
+Menu\-Item {\bf menu\-Item1}
+\begin{CompactList}\small\item\em menu of recent files \item\end{CompactList}\item 
+Menu\-Item {\bf menu\-Item\-F1}
+\begin{CompactList}\small\item\em recent file 1 \item\end{CompactList}\item 
+Menu\-Item {\bf menu\-Item\-F2}
+\begin{CompactList}\small\item\em recent file 2 \item\end{CompactList}\item 
+Menu\-Item {\bf menu\-Item\-F3}
+\begin{CompactList}\small\item\em recent file 3 \item\end{CompactList}\item 
+Menu\-Item {\bf menu\-Item\-F4}
+\begin{CompactList}\small\item\em recent file 4 \item\end{CompactList}\item 
+Menu\-Item {\bf menu\-Item\-F5}
+\begin{CompactList}\small\item\em recent file 5 \item\end{CompactList}\item 
+Font {\bf m\-My\-Font} = new Font( \char`\"{}Times New Roman\char`\"{}, 12 )
+\begin{CompactList}\small\item\em font for drawing strings \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+Instantiate this class to display an image. v4.1 adds support for drag-and-drop of input files. 
+
+\begin{Desc}
+\item[Version:]4.2 fixes scrolling issues. \end{Desc}
+
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!CSImageViewer@{CSImageViewer}}
+\index{CSImageViewer@{CSImageViewer}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf CSImage\-Viewer} ()}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_948095f67179ef14489f75c7ad5d0745}
+
+
+Ctor that simply creates an empty window. 
+
+\begin{Desc}
+\item[Returns:]nothing (ctor) \end{Desc}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!CSImageViewer@{CSImageViewer}}
+\index{CSImageViewer@{CSImageViewer}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf CSImage\-Viewer} (String {\em fname})}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_c9177447d92704bc773976f6c6d7a7db}
+
+
+Ctor that creates a window that displays the specified image file. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em fname}]file name of image displayed in window \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]nothing (ctor) \end{Desc}
+
+
+\subsection{Member Function Documentation}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!Dispose@{Dispose}}
+\index{Dispose@{Dispose}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}override void Dispose (bool {\em disposing})\hspace{0.3cm}{\tt  [protected]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_849c3c7f8d08104f0cdb46bee9fe6389}
+
+
+Clean up any resources being used. 
+
+\begin{Desc}
+\item[Returns:]nothing (void) \end{Desc}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!InitializeComponent@{InitializeComponent}}
+\index{InitializeComponent@{InitializeComponent}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Initialize\-Component ()\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_6405d5db675d5338663195a4d12b4c9f}
+
+
+Required method for Designer support - do not modify the contents of this method with the code editor. 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!loadRecent@{loadRecent}}
+\index{loadRecent@{loadRecent}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void load\-Recent ()\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_728a865d1124807550126e04bb693504}
+
+
+set up the sub menu of most recent files. 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!OnDragDrop@{OnDragDrop}}
+\index{OnDragDrop@{OnDragDrop}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void On\-Drag\-Drop (object {\em sender}, Drag\-Event\-Args {\em e})\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_6ece065e4271129524e6b648a11696e6}
+
+
+Handle drag-and-drop of files by creating a new {\bf CSImage\-Viewer}{\rm (p.\,\pageref{class_c_s_image_viewer_1_1_c_s_image_viewer})} window for each. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em sender}]sender \item[{\em e}]event args \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]nothing (void) \end{Desc}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!OnDragEnter@{OnDragEnter}}
+\index{OnDragEnter@{OnDragEnter}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void On\-Drag\-Enter (object {\em sender}, Drag\-Event\-Args {\em e})\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_bbe1f3021f3a126f24f0ccee91e7d710}
+
+
+Handle drag-enter (for drag-and-drop of files) by check each file name extension, and rejecting bad ones. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em sender}]sender \item[{\em e}]event args \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]nothing (void) \end{Desc}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!OnFileClose@{OnFileClose}}
+\index{OnFileClose@{OnFileClose}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void On\-File\-Close (object {\em sender}, Event\-Args {\em e})\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_15a46e4fe445ba9f7918053b30ee7b1e}
+
+
+Handle file-close by closing this window. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em sender}]sender \item[{\em e}]event args \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]nothing (void) \end{Desc}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!OnFileExit@{OnFileExit}}
+\index{OnFileExit@{OnFileExit}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void On\-File\-Exit (object {\em sender}, System.Event\-Args {\em e})\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_077956e9f8880bb2a03bff4577f62ae5}
+
+
+Handle file-exit by exitting the application. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em sender}]sender \item[{\em e}]event args \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]nothing (void) \end{Desc}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!OnFileOpen@{OnFileOpen}}
+\index{OnFileOpen@{OnFileOpen}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void On\-File\-Open (object {\em sender}, Event\-Args {\em e})\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_6ff74b461ff2a4e9eaad7716f580639c}
+
+
+Handle file-open. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em sender}]sender \item[{\em e}]event args \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]nothing (void) \end{Desc}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!OnFileSave@{OnFileSave}}
+\index{OnFileSave@{OnFileSave}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void On\-File\-Save (object {\em sender}, Event\-Args {\em e})\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_3be1eef5825d5fcade13c996cdd18b3c}
+
+
+Handle file-save. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em sender}]sender \item[{\em e}]event args \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]nothing (void) \end{Desc}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!OnFileSaveAs@{OnFileSaveAs}}
+\index{OnFileSaveAs@{OnFileSaveAs}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void On\-File\-Save\-As (object {\em sender}, Event\-Args {\em e})\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_5585cc6a3dcf957fe357138bcb1a3fec}
+
+
+Handle file-saveas. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em sender}]sender \item[{\em e}]event args \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]nothing (void) \end{Desc}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!OnMouseMoved@{OnMouseMoved}}
+\index{OnMouseMoved@{OnMouseMoved}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void On\-Mouse\-Moved (object {\em sender}, Mouse\-Event\-Args {\em e})\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_9f3fb3c1482b02132c8435daac3daf6a}
+
+
+Track mouse movement. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em sender}]sender \item[{\em e}]mouse event \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]nothing (void) \end{Desc}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!OnPaint@{OnPaint}}
+\index{OnPaint@{OnPaint}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}override void On\-Paint (Paint\-Event\-Args {\em e})\hspace{0.3cm}{\tt  [protected]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_7b49a512aef9068aebdc17097736f6b9}
+
+
+redraw the panel contents. This method simply draws/displays the Image\-Data's display image. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em e}]paint event args \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]nothing (void) \end{Desc}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!onRecentFile@{onRecentFile}}
+\index{onRecentFile@{onRecentFile}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void on\-Recent\-File (object {\em sender}, Event\-Args {\em e})\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_901e4a44b87cc12abf2d8dfcaed623d4}
+
+
+one of the most recent files was selected. create a viewer for it. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em sender}]sender \item[{\em e}]event args \end{description}
+\end{Desc}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!OnScroll@{OnScroll}}
+\index{OnScroll@{OnScroll}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void On\-Scroll (object {\em sender}, Scroll\-Event\-Args {\em e})\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_4030669df2b2fa92fec0e187b32105f0}
+
+
+scrolling. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em sender}]sender \item[{\em e}]event args \end{description}
+\end{Desc}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!saveRecent@{saveRecent}}
+\index{saveRecent@{saveRecent}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void save\-Recent (String {\em s})\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_1b22852cf7fa95b3461e8a45c70a375f}
+
+
+add the file to the list of most recent files. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em s}]is the file name to be added to the list. \end{description}
+\end{Desc}
+
+
+\subsection{Member Data Documentation}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!components@{components}}
+\index{components@{components}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}IContainer {\bf components}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_99da98a95c3e5b991956dd95d2039960}
+
+
+do not use directly 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!FileClose@{FileClose}}
+\index{FileClose@{FileClose}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf File\-Close}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_4e925b2e0c81d24ff1ac0e053cf58a29}
+
+
+close menu item 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!FileExit@{FileExit}}
+\index{FileExit@{FileExit}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf File\-Exit}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_c82b0a887061ffa8cb6aad391e82a962}
+
+
+exit menu item 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!FileMenuItem@{FileMenuItem}}
+\index{FileMenuItem@{FileMenuItem}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf File\-Menu\-Item}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_6772207140f051be4382205f151e2ba2}
+
+
+file menu item 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!FileOpen@{FileOpen}}
+\index{FileOpen@{FileOpen}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf File\-Open}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_b5c5e2ff722a82d128c7b44754883355}
+
+
+open menu item 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!FileSave@{FileSave}}
+\index{FileSave@{FileSave}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf File\-Save}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_029a662ee49448077067ee8283295e23}
+
+
+save menu item 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!FileSaveAs@{FileSaveAs}}
+\index{FileSaveAs@{FileSaveAs}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf File\-Save\-As}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_5e96aedd9ed2d3cd59986232381bc437}
+
+
+save as menu item 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!mainMenu1@{mainMenu1}}
+\index{mainMenu1@{mainMenu1}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Main\-Menu {\bf main\-Menu1}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_381a2a1dbda56d1c2ea63815b8d409f6}
+
+
+menubar 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuItem1@{menuItem1}}
+\index{menuItem1@{menuItem1}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf menu\-Item1}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_3873417ea5ae90a322d28ef97fa8d931}
+
+
+menu of recent files 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuItemF1@{menuItemF1}}
+\index{menuItemF1@{menuItemF1}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf menu\-Item\-F1}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_45649d46a0a62237348bce8071ad8448}
+
+
+recent file 1 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuItemF2@{menuItemF2}}
+\index{menuItemF2@{menuItemF2}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf menu\-Item\-F2}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_26ee56599e578bb0a6467e4db8812a0e}
+
+
+recent file 2 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuItemF3@{menuItemF3}}
+\index{menuItemF3@{menuItemF3}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf menu\-Item\-F3}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_53a70ca95fa0970a1f7da8c0ec9cb69e}
+
+
+recent file 3 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuItemF4@{menuItemF4}}
+\index{menuItemF4@{menuItemF4}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf menu\-Item\-F4}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_28d1a3868757eece95b627add3f08180}
+
+
+recent file 4 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuItemF5@{menuItemF5}}
+\index{menuItemF5@{menuItemF5}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf menu\-Item\-F5}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_661d21ebd7d622f23c341a2139efd074}
+
+
+recent file 5 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuSeparator@{menuSeparator}}
+\index{menuSeparator@{menuSeparator}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf menu\-Separator}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_3712c2d227538f5a1f8c186d9dd214ad}
+
+
+separator 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!mExtentions@{mExtentions}}
+\index{mExtentions@{mExtentions}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}String [$\,$] {\bf m\-Extentions} = \{ \char`\"{}.bmp\char`\"{}, \char`\"{}.ico\char`\"{}, \char`\"{}.gif\char`\"{}, \char`\"{}.jpg\char`\"{}, \char`\"{}.png\char`\"{}, \char`\"{}.pnm\char`\"{}, \char`\"{}.ppm\char`\"{}, \char`\"{}.pgm\char`\"{}, \char`\"{}.tif\char`\"{}, \char`\"{}.tiff\char`\"{} \}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_9c5138b44b04f64167303cae8ff04a68}
+
+
+allowable input file name extensions (endings). keep lowercase! 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!mImage@{mImage}}
+\index{mImage@{mImage}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\-Data} {\bf m\-Image}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_e4c78f083a03716aebf9fd5dcd8781fb}
+
+
+actual image data 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!mMouseMoveValid@{mMouseMoveValid}}
+\index{mMouseMoveValid@{mMouseMoveValid}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}bool {\bf m\-Mouse\-Move\-Valid} = false\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_76e312fcbbaa9f9c1a734c8807577b4f}
+
+
+is mouxe (x,y) below valid? 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!mMouseX@{mMouseX}}
+\index{mMouseX@{mMouseX}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int {\bf m\-Mouse\-X}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_540c3d5817a5ff009332251d5d1777d3}
+
+
+mouse movement x position 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!mMouseY@{mMouseY}}
+\index{mMouseY@{mMouseY}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int {\bf m\-Mouse\-Y}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_9c6bed822ef36d795811e51a0ceae1c1}
+
+
+mouse movement y position 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!mMyFont@{mMyFont}}
+\index{mMyFont@{mMyFont}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Font {\bf m\-My\-Font} = new Font( \char`\"{}Times New Roman\char`\"{}, 12 )\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_74f10eccdd19762e878e69de3a847a9d}
+
+
+font for drawing strings 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!sFilter@{sFilter}}
+\index{sFilter@{sFilter}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}const String {\bf s\-Filter}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_424279d05bf6aa630d3da627a64ed746}
+
+
+{\bf Initial value:}
+
+\footnotesize\begin{verbatim} "All image files (*.bmp;*.ico;*.gif;*.jpg;*.png;*.pnm;*.ppm;*.pgm;*.tif;*.tiff)|*.bmp;*.ico;*.gif;*.jpg;*.png;*.pnm;*.ppm;*.pgm;*.tif;*.tiff"
+            + "|Bitmap files (*.bmp)|*.bmp"
+            + "|Icon files   (*.ico)|*.ico"
+            + "|GIF files    (*.gif)|*.gif"
+            + "|JPEG files   (*.jpg)|*.jpg"
+            + "|PNG files    (*.png)|*.png"
+            + "|PNM files    (*.pnm;*.ppm;*.pgm)|*.pnm;*.ppm;*.pgm"
+            + "|TIFF files   (*.tif;*.tiff)|*.tif;*.tiff"
+            + "|All files    (*.*)|*.*"
+\end{verbatim}\normalsize 
+input file name filter string for image files 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!Zoom@{Zoom}}
+\index{Zoom@{Zoom}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}double {\bf Zoom} = 1.0\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_0e089a5fee7fd471a09d154132e70d19}
+
+
+zoom/scale factor 
+
+
+
+The documentation for this class was generated from the following file:\begin{CompactItemize}
+\item 
+{\bf CSImage\-Viewer.cs}\end{CompactItemize}
