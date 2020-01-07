@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="CSImageViewer">
+</Property><Property Name="Solution File" Value="C:\Users\ggrevera\Downloads\CSImageViewer\CSImageViewer.sln">
+</Property><Property Name="Date" Value="Monday, December 19, 2011">
+</Property><Property Name="Time" Value="21:09 PM">
+</Property></Properties><Event ErrorLevel="0" Project="CSImageViewer" Source="CSImageViewer\CSImageViewer.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="CSImageViewer" Source="CSImageViewer\CSImageViewer.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="CSImageViewer.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="CSImageViewer.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="CSImageViewer" Source="CSImageViewer\CSImageViewer.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>

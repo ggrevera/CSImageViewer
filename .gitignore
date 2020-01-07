@@ -1,0 +1,8 @@
+bin/
+Debug/
+obj/
+Release/
+*.dll
+*.exe
+*.obj
+!doxygen.exe
