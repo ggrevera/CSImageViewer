@@ -236,7 +236,7 @@ namespace CSImageViewer {
          *  \returns  the gray pixel value at that position.
          */
         public int getGray ( int row, int col ) {
-            /** \todo project: speed up indexing */
+            /** \todo george: speed up indexing */
             int  offset = row * mW + col;
             return mOriginalData[ offset ];
         }

@@ -335,7 +335,7 @@ namespace CSImageViewer {
          *  \returns  the value of the pixel's red component.
          */
         public int getRed ( int row, int col ) {
-            /** \todo project: speed up indexing */
+            /** \todo george: speed up indexing */
             int offset = 3 * (row * mW + col);
             return mOriginalData[ offset ];
         }
@@ -348,7 +348,7 @@ namespace CSImageViewer {
          *  \returns  the value of the pixel's green component.
          */
         public int getGreen ( int row, int col ) {
-            /** \todo project: speed up indexing */
+            /** \todo george: speed up indexing */
             int offset = 3 * (row * mW + col);
             return mOriginalData[ offset+1 ];
         }
@@ -361,7 +361,7 @@ namespace CSImageViewer {
          *  \returns  the value of the pixel's blue component.
          */
         public int getBlue ( int row, int col ) {
-            /** \todo project: speed up indexing */
+            /** \todo george: speed up indexing */
             int offset = 3 * (row * mW + col);
             return mOriginalData[ offset+2 ];
         }
