@@ -4,6 +4,7 @@ using System.IO;
 using System.Diagnostics;
 //----------------------------------------------------------------------
 #pragma warning disable IDE1006
+#pragma warning disable CS0219
 
 namespace CSImageViewer {
 
@@ -16,6 +17,7 @@ namespace CSImageViewer {
          * and http://soundfile.sapp.org/doc/WaveFormat/
          * and http://www.lightlink.com/tjweber/StripWav/WAVE.html
          * and http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/WAVE.html
+         * @todo george: replace the array params below with <em>out</em> params.
          */
         public static int[] read ( String fname, int[] w, int[] h, int[] min, int[] max ) {
             //init additional return values
@@ -146,9 +148,12 @@ namespace CSImageViewer {
                     Debug.Assert( fs.CanSeek );
                     /**
                      * @todo: george - need to convert floats to ints; tricky.
-                     * need to load floats, determine float min and max, then scale and convert to in min and max.
+                     * need to load floats, determine float min and max, then scale using min and max (but of what intdata type?)
                      */
                     float[] buff = new float[ w[0]*h[0] ];
+
+                    //a better (safe) way to do the code below would be to replace it with BitConverter.ToSingle(Byte[], Int32)
+
                     unsafe {
                         int x = data[0] + (data[1]<<8) + (data[2]<<16) + (data[3]<<24);
                         float* fptr = (float*) &x;
@@ -166,6 +171,10 @@ namespace CSImageViewer {
                             if (f > fMax)
                                 fMax = f;
                         }
+                        //now scale
+                        //should be -1.0 <= fMin <= fMax <= +1.0
+                        Console.WriteLine( fMin );
+                        Console.WriteLine( fMax );
                     }
                     Debug.Assert( false );
                 } else {

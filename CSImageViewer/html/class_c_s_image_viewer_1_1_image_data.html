@@ -40,6 +40,9 @@
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_s_image_viewer_1_1_image_data.html#f1e4c902ded334322ec78572ebfedc90">getIsColor</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">accessor returning whether this is a color (or gray) image.  <a href="#f1e4c902ded334322ec78572ebfedc90"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_s_image_viewer_1_1_image_data.html#54e153862be2c0c9d98dbae8ff5815c6">getIsAudio</a> ()</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">accessor returning whether this is audio data.  <a href="#54e153862be2c0c9d98dbae8ff5815c6"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_s_image_viewer_1_1_image_data.html#68c87c6f22371f3afa7e5e55edf80148">getImageModified</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">accessor returning whether this image has been modified (changed) or not.  <a href="#68c87c6f22371f3afa7e5e55edf80148"></a><br></td></tr>
@@ -75,7 +78,10 @@
 <tr><td colspan="2"><br><h2>Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_s_image_viewer_1_1_image_data.html#e54c83f378c5252a31e1330a6fd004f2">mIsColor</a></td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">true if color (rgb); false if gray  <a href="#e54c83f378c5252a31e1330a6fd004f2"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">true if color (rgb); false if gray (or audio)  <a href="#e54c83f378c5252a31e1330a6fd004f2"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_s_image_viewer_1_1_image_data.html#711f2e7e9d8bc38f19071ead8be3e871">mIsAudio</a></td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">true if audio; false if color or ordinary gray  <a href="#711f2e7e9d8bc38f19071ead8be3e871"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_s_image_viewer_1_1_image_data.html#8c97107b453c6a65ed01f6f3b40bb9b8">mImageModified</a></td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">true if image has been modified  <a href="#8c97107b453c6a65ed01f6f3b40bb9b8"></a><br></td></tr>
@@ -217,6 +223,35 @@ accessor returning image height.
 
 <p>
 accessor returning whether this image has been modified (changed) or not. 
+<p>
+    </td>
+  </tr>
+</table>
+<a class="anchor" name="54e153862be2c0c9d98dbae8ff5815c6"></a><!-- doxytag: member="CSImageViewer::ImageData::getIsAudio" ref="54e153862be2c0c9d98dbae8ff5815c6" args="()" --><p>
+<table class="mdTable" cellpadding="2" cellspacing="0">
+  <tr>
+    <td class="mdRow">
+      <table cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td class="md" nowrap valign="top">bool getIsAudio           </td>
+          <td class="md" valign="top">(&nbsp;</td>
+          <td class="mdname1" valign="top" nowrap>          </td>
+          <td class="md" valign="top">&nbsp;)&nbsp;</td>
+          <td class="md" nowrap></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<table cellspacing="5" cellpadding="0" border="0">
+  <tr>
+    <td>
+      &nbsp;
+    </td>
+    <td>
+
+<p>
+accessor returning whether this is audio data. 
 <p>
     </td>
   </tr>
@@ -536,6 +571,31 @@ true if image has been modified
     </td>
   </tr>
 </table>
+<a class="anchor" name="711f2e7e9d8bc38f19071ead8be3e871"></a><!-- doxytag: member="CSImageViewer::ImageData::mIsAudio" ref="711f2e7e9d8bc38f19071ead8be3e871" args="" --><p>
+<table class="mdTable" cellpadding="2" cellspacing="0">
+  <tr>
+    <td class="mdRow">
+      <table cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td class="md" nowrap valign="top">bool <a class="el" href="class_c_s_image_viewer_1_1_image_data.html#711f2e7e9d8bc38f19071ead8be3e871">mIsAudio</a><code> [protected]</code>          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<table cellspacing="5" cellpadding="0" border="0">
+  <tr>
+    <td>
+      &nbsp;
+    </td>
+    <td>
+
+<p>
+true if audio; false if color or ordinary gray 
+<p>
+    </td>
+  </tr>
+</table>
 <a class="anchor" name="e54c83f378c5252a31e1330a6fd004f2"></a><!-- doxytag: member="CSImageViewer::ImageData::mIsColor" ref="e54c83f378c5252a31e1330a6fd004f2" args="" --><p>
 <table class="mdTable" cellpadding="2" cellspacing="0">
   <tr>
@@ -556,7 +616,7 @@ true if image has been modified
     <td>
 
 <p>
-true if color (rgb); false if gray 
+true if color (rgb); false if gray (or audio) 
 <p>
     </td>
   </tr>
@@ -666,6 +726,6 @@ image width
 <hr>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="_image_data_8cs.html">ImageData.cs</a></ul>
 <hr size="1"><address style="align: right;"><small>
-<img src="../bg.gif"> Generated on Tue Jan 7 10:16:25 2020 for CSImageViewer by&nbsp;<a href="http://www.doxygen.org/index.html"><img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.4.6-NO</small></address>
+<img src="../bg.gif"> Generated on Mon Jan 13 15:04:51 2020 for CSImageViewer by&nbsp;<a href="http://www.doxygen.org/index.html"><img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.4.6-NO</small></address>
 </body>
 </html>

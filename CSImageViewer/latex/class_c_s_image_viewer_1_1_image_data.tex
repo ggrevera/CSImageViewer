@@ -16,6 +16,8 @@ void {\bf save\-Display\-Image} (String fname)
 \begin{CompactList}\small\item\em Save the display image to a file. \item\end{CompactList}\item 
 bool {\bf get\-Is\-Color} ()
 \begin{CompactList}\small\item\em accessor returning whether this is a color (or gray) image. \item\end{CompactList}\item 
+bool {\bf get\-Is\-Audio} ()
+\begin{CompactList}\small\item\em accessor returning whether this is audio data. \item\end{CompactList}\item 
 bool {\bf get\-Image\-Modified} ()
 \begin{CompactList}\small\item\em accessor returning whether this image has been modified (changed) or not. \item\end{CompactList}\item 
 int {\bf get\-W} ()
@@ -46,7 +48,9 @@ Bitmap {\bf m\-Display\-Image}
 \begin{CompactItemize}
 \item 
 bool {\bf m\-Is\-Color}
-\begin{CompactList}\small\item\em true if color (rgb); false if gray \item\end{CompactList}\item 
+\begin{CompactList}\small\item\em true if color (rgb); false if gray (or audio) \item\end{CompactList}\item 
+bool {\bf m\-Is\-Audio}
+\begin{CompactList}\small\item\em true if audio; false if color or ordinary gray \item\end{CompactList}\item 
 bool {\bf m\-Image\-Modified}
 \begin{CompactList}\small\item\em true if image has been modified \item\end{CompactList}\item 
 int {\bf m\-W}
@@ -98,6 +102,13 @@ accessor returning image height.
 
 
 accessor returning whether this image has been modified (changed) or not. 
+
+\index{CSImageViewer::ImageData@{CSImage\-Viewer::Image\-Data}!getIsAudio@{getIsAudio}}
+\index{getIsAudio@{getIsAudio}!CSImageViewer::ImageData@{CSImage\-Viewer::Image\-Data}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}bool get\-Is\-Audio ()}\label{class_c_s_image_viewer_1_1_image_data_54e153862be2c0c9d98dbae8ff5815c6}
+
+
+accessor returning whether this is audio data. 
 
 \index{CSImageViewer::ImageData@{CSImage\-Viewer::Image\-Data}!getIsColor@{getIsColor}}
 \index{getIsColor@{getIsColor}!CSImageViewer::ImageData@{CSImage\-Viewer::Image\-Data}}
@@ -195,12 +206,19 @@ image height
 
 true if image has been modified 
 
+\index{CSImageViewer::ImageData@{CSImage\-Viewer::Image\-Data}!mIsAudio@{mIsAudio}}
+\index{mIsAudio@{mIsAudio}!CSImageViewer::ImageData@{CSImage\-Viewer::Image\-Data}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}bool {\bf m\-Is\-Audio}\hspace{0.3cm}{\tt  [protected]}}\label{class_c_s_image_viewer_1_1_image_data_711f2e7e9d8bc38f19071ead8be3e871}
+
+
+true if audio; false if color or ordinary gray 
+
 \index{CSImageViewer::ImageData@{CSImage\-Viewer::Image\-Data}!mIsColor@{mIsColor}}
 \index{mIsColor@{mIsColor}!CSImageViewer::ImageData@{CSImage\-Viewer::Image\-Data}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}bool {\bf m\-Is\-Color}\hspace{0.3cm}{\tt  [protected]}}\label{class_c_s_image_viewer_1_1_image_data_e54c83f378c5252a31e1330a6fd004f2}
 
 
-true if color (rgb); false if gray 
+true if color (rgb); false if gray (or audio) 
 
 \index{CSImageViewer::ImageData@{CSImage\-Viewer::Image\-Data}!mMax@{mMax}}
 \index{mMax@{mMax}!CSImageViewer::ImageData@{CSImage\-Viewer::Image\-Data}}

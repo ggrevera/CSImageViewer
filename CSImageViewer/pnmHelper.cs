@@ -34,6 +34,7 @@ namespace CSImageViewer {
 
     /** \brief  This class contains methods that read and write
      *  PNM/PGM/PPM images (color rgb and grey images).
+     * @todo george: replace the array params below with <em>out</em> params.
      */
     class pnmHelper {
 
