@@ -43,7 +43,8 @@ namespace CSImageViewer {
      */
     abstract public class ImageData {
 
-        protected bool    mIsColor;        ///< true if color (rgb); false if gray
+        protected bool    mIsColor;        ///< true if color (rgb); false if gray (or audio)
+        protected bool    mIsAudio;        ///< true if audio; false if color or ordinary gray
         protected bool    mImageModified;  ///< true if image has been modified
         protected int     mW;              ///< image width
         protected int     mH;              ///< image height
@@ -92,8 +93,9 @@ namespace CSImageViewer {
             Timer      t  = new Timer();
             ImageData  id = null;
             String     up = fileName.ToUpper();
+
             if (up.EndsWith( ".PPM" ) || up.EndsWith( ".PNM" ) || up.EndsWith( ".PGM" )) {
-                //technique (trick?  kludge?) to implement pass-by-reference
+                //technique (trick? kludge?) to implement pass-by-reference
                 int[] w   = new int[ 1 ];
                 int[] h   = new int[ 1 ];
                 int[] spp = new int[ 1 ];
@@ -102,91 +104,106 @@ namespace CSImageViewer {
                 int[] originalData = pnmHelper.read_pnm_file( fileName, w, h, spp, min, max );
                 t.print();
                 if (max[ 0 ] > 255)
-                    MessageBox.Show( "Warning:\n\nMax value of " + max[0] + " exceeds limit of 255." );
+                    MessageBox.Show( "Warning:\n\nMax value of " + max[ 0 ] + " exceeds limit of 255." );
                 if (spp[ 0 ] == 3) {
-                    id = new ColorImageData( originalData, w[0], h[0] );
+                    id = new ColorImageData( originalData, w[ 0 ], h[ 0 ] );
                     id.mFname = fileName;
                     return id;
                 }
                 if (spp[ 0 ] == 1) {
-                    id = new GrayImageData( originalData, w[0], h[0] );
+                    id = new GrayImageData( originalData, w[ 0 ], h[ 0 ] );
                     id.mFname = fileName;
                     return id;
                 }
+                return null;
             }
-            else {
-                Console.WriteLine("here");
-                //Console.Out.WriteLine("here");
-                //see http://www.bobpowell.net/lockingbits.htm for description of Bitmap pixel access.
-                Bitmap  bm = (Bitmap) Bitmap.FromFile( fileName, false );
+
+            if (up.EndsWith( ".WAV" )) {
+                //basically treat audio wave files like 2d gray files (which are probably wide but not very high)
+                //technique (trick? kludge?) to implement pass-by-reference
+                int[] w   = new int[ 1 ];
+                int[] h   = new int[ 1 ];
+                int[] spp = new int[ 1 ];
+                int[] min = new int[ 1 ];
+                int[] max = new int[ 1 ];
+                int[] originalData = wavHelper.read( fileName, w, h, min, max );
                 t.print();
-                switch (bm.PixelFormat) {
-                    case PixelFormat.Format1bppIndexed:
-                        MessageBox.Show( "Sorry!\n\n Unsupported PixelFormat - Format1bppIndexed." );
-                        break;
+                id = new GrayImageData( originalData, w[ 0 ], h[ 0 ] );
+                id.mFname = fileName;
+                id.mIsAudio = true;
+                return id;
+            }
 
-                    case PixelFormat.Format4bppIndexed:
-                    case PixelFormat.Format8bppIndexed:
-                        if (bm.PixelFormat == PixelFormat.Format4bppIndexed)
-                            MessageBox.Show( "Caution!\n\n This hasn't been tested on 4 bpp indexed images." );
-                        //this is a bit tricky.  each scalar value in the image is used as an index
-                        // into a table (Palette).  Palette entries are rgb but if r==g==b, then this is
-                        // actually gray data.  so let's first deteremine if this is color or gray.
-                        bool isGray = true;
-                        for (int i=0; i<bm.Palette.Entries.Length; i++) {
-                            Color c = bm.Palette.Entries[ i ];
-                            if (c.R == c.G && c.G == c.B) continue;
-                            isGray = false;
-                            break;
-                        }
-                        int bpp = 0;
-                        if (bm.PixelFormat == PixelFormat.Format8bppIndexed) bpp = 8;
-                        else if (bm.PixelFormat == PixelFormat.Format4bppIndexed) bpp = 4;
-                        if (isGray)
-                            id = new GrayImageData(  bm, bm.Palette.Entries, bpp );
-                        else
-                            id = new ColorImageData( bm, bm.Palette.Entries, bpp );
-                        id.mFname = fileName;
-                        return id;
+            Console.WriteLine( "here" );
+            //see http://www.bobpowell.net/lockingbits.htm for description of Bitmap pixel access.
+            Bitmap  bm = (Bitmap) Bitmap.FromFile( fileName, false );
+            t.print();
+            switch (bm.PixelFormat) {
+                case PixelFormat.Format1bppIndexed:
+                    MessageBox.Show( "Sorry!\n\n Unsupported PixelFormat - Format1bppIndexed." );
+                    break;
 
-                    case PixelFormat.Format16bppGrayScale:
-                        MessageBox.Show( "Sorry!\n\n Unsupported PixelFormat - Format16bppGrayScale." );
+                case PixelFormat.Format4bppIndexed:
+                case PixelFormat.Format8bppIndexed:
+                    if (bm.PixelFormat == PixelFormat.Format4bppIndexed)
+                        MessageBox.Show( "Caution!\n\n This hasn't been tested on 4 bpp indexed images." );
+                    //this is a bit tricky.  each scalar value in the image is used as an index
+                    // into a table (Palette).  Palette entries are rgb but if r==g==b, then this is
+                    // actually gray data.  so let's first deteremine if this is color or gray.
+                    bool isGray = true;
+                    for (int i = 0; i < bm.Palette.Entries.Length; i++) {
+                        Color c = bm.Palette.Entries[ i ];
+                        if (c.R == c.G && c.G == c.B) continue;
+                        isGray = false;
                         break;
-                    case PixelFormat.Format16bppRgb555:
-                        MessageBox.Show( "Sorry!\n\n Unsupported PixelFormat - Format16bppRgb555." );
-                        break;
-                    case PixelFormat.Format16bppRgb565:
-                        MessageBox.Show( "Sorry!\n\n Unsupported PixelFormat - Format16bppRgb565." );
-                        break;
+                    }
+                    int bpp = 0;
+                    if (bm.PixelFormat == PixelFormat.Format8bppIndexed)         bpp = 8;
+                    else if (bm.PixelFormat == PixelFormat.Format4bppIndexed)    bpp = 4;
+                    if (isGray)
+                        id = new GrayImageData( bm, bm.Palette.Entries, bpp );
+                    else
+                        id = new ColorImageData( bm, bm.Palette.Entries, bpp );
+                    id.mFname = fileName;
+                    return id;
 
-                    case PixelFormat.Format24bppRgb:
-                    case PixelFormat.Format32bppRgb:
-                        id = new ColorImageData( bm );
-                        id.mFname = fileName;
-                        return id;
+                case PixelFormat.Format16bppGrayScale:
+                    MessageBox.Show( "Sorry!\n\n Unsupported PixelFormat - Format16bppGrayScale." );
+                    break;
+                case PixelFormat.Format16bppRgb555:
+                    MessageBox.Show( "Sorry!\n\n Unsupported PixelFormat - Format16bppRgb555." );
+                    break;
+                case PixelFormat.Format16bppRgb565:
+                    MessageBox.Show( "Sorry!\n\n Unsupported PixelFormat - Format16bppRgb565." );
+                    break;
 
-                    case PixelFormat.Format48bppRgb:
-                        MessageBox.Show( "Sorry!\n\n Unsupported PixelFormat - Format48bppRgb." );
-                        break;
-                    case PixelFormat.Format16bppArgb1555:
-                        MessageBox.Show( "Sorry!\n\n Unsupported PixelFormat - Format16bppArgb1555." );
-                        break;
+                case PixelFormat.Format24bppRgb:
+                case PixelFormat.Format32bppRgb:
+                    id = new ColorImageData( bm );
+                    id.mFname = fileName;
+                    return id;
 
-                    case PixelFormat.Format32bppArgb:
-                        id = new ColorImageData( bm );
-                        id.mFname = fileName;
-                        return id;
+                case PixelFormat.Format48bppRgb:
+                    MessageBox.Show( "Sorry!\n\n Unsupported PixelFormat - Format48bppRgb." );
+                    break;
+                case PixelFormat.Format16bppArgb1555:
+                    MessageBox.Show( "Sorry!\n\n Unsupported PixelFormat - Format16bppArgb1555." );
+                    break;
 
-                    case PixelFormat.Format64bppArgb:
-                        MessageBox.Show( "Sorry!\n\n Unsupported PixelFormat - Format64bppArgb." );
-                        break;
-                    case PixelFormat.Format32bppPArgb:
-                        MessageBox.Show( "Sorry!\n\n Unsupported PixelFormat - Format32bppPArgb." );
-                        break;
-                    case PixelFormat.Format64bppPArgb:
-                        MessageBox.Show( "Sorry!\n\n Unsupported PixelFormat - Format64bppPArgb." );
-                        break;
-                }
+                case PixelFormat.Format32bppArgb:
+                    id = new ColorImageData( bm );
+                    id.mFname = fileName;
+                    return id;
+
+                case PixelFormat.Format64bppArgb:
+                    MessageBox.Show( "Sorry!\n\n Unsupported PixelFormat - Format64bppArgb." );
+                    break;
+                case PixelFormat.Format32bppPArgb:
+                    MessageBox.Show( "Sorry!\n\n Unsupported PixelFormat - Format32bppPArgb." );
+                    break;
+                case PixelFormat.Format64bppPArgb:
+                    MessageBox.Show( "Sorry!\n\n Unsupported PixelFormat - Format64bppPArgb." );
+                    break;
             }
             return null;
         }
@@ -222,6 +239,10 @@ namespace CSImageViewer {
         //
         /** \brief accessor returning whether this is a color (or gray) image. */
         public bool getIsColor ( ) {
+            return mIsColor;
+        }
+        /** \brief accessor returning whether this is audio data. */
+        public bool getIsAudio ( ) {
             return mIsColor;
         }
         /** \brief accessor returning whether this image has been modified (changed) or not. */

@@ -54,9 +54,10 @@ public class CSImageViewer : Form {
             + "|PNG files    (*.png)|*.png"
             + "|PNM files    (*.pnm;*.ppm;*.pgm)|*.pnm;*.ppm;*.pgm"
             + "|TIFF files   (*.tif;*.tiff)|*.tif;*.tiff"
+            + "|audio files  (*.wav)|*.wav"
             + "|All files    (*.*)|*.*";
         /** \brief allowable input file name extensions (endings).  keep lowercase! */
-        private String[] mExtentions = { ".bmp", ".ico", ".gif", ".jpg", ".png", ".pnm", ".ppm", ".pgm", ".tif", ".tiff" };
+        private readonly String[] mExtentions = { ".bmp", ".ico", ".gif", ".jpg", ".png", ".pnm", ".ppm", ".pgm", ".tif", ".tiff" };
         public ImageData mImage;          ///< actual image data
 
         private MainMenu mainMenu1;       ///< menubar
