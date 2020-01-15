@@ -401,7 +401,7 @@ public class CSImageViewer : Form {
             string[] files = (string[])e.Data.GetData( DataFormats.FileDrop );
             foreach (string f in files) {
                 if (mImage == null) {
-                    this.mImage = ImageData.load(f);
+                    this.mImage = ImageData.load( f );
                     this.Text = "CSImageViewer: " + f;
                     this.AutoScroll = true;
                     if (this.AutoScroll)

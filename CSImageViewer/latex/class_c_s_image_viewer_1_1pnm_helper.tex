@@ -6,11 +6,11 @@ This class contains methods that read and write PNM/PGM/PPM images (color rgb an
 \subsection*{Static Public Member Functions}
 \begin{CompactItemize}
 \item 
-static int[$\,$] {\bf read\_\-pnm\_\-file} (String fname, int[$\,$] w, int[$\,$] h, int[$\,$] samples\-Per\-Pixel, int[$\,$] min, int[$\,$] max)
+static int[$\,$] {\bf read\_\-pnm\_\-file} (String fname, out int w, out int h, out int samples\-Per\-Pixel, out int min, out int max)
 \begin{CompactList}\small\item\em {\bf  This method should be generally used to read any pnm (pgm grey, ppm color) binary or ascii image files. } \item\end{CompactList}\item 
-static int[$\,$] {\bf read\_\-binary\_\-pgm16\_\-file} (String fname, int[$\,$] w, int[$\,$] h, int[$\,$] min, int[$\,$] max)
+static int[$\,$] {\bf read\_\-binary\_\-pgm16\_\-file} (String fname, out int w, out int h, out int min, out int max)
 \begin{CompactList}\small\item\em {\bf Non-standard} function that reads 16-bit values as a binary pgm file ({\bf not implemented yet}). \item\end{CompactList}\item 
-static int[$\,$] {\bf read\_\-binary\_\-pgm32\_\-file} (String fname, int[$\,$] w, int[$\,$] h, int[$\,$] min, int[$\,$] max)
+static int[$\,$] {\bf read\_\-binary\_\-pgm32\_\-file} (String fname, out int w, out int h, out int min, out int max)
 \begin{CompactList}\small\item\em {\bf Non-standard} function that reads 32-bit values as a binary pgm file ({\bf not implemented yet}). \item\end{CompactList}\item 
 static void {\bf write\_\-pgm\_\-or\_\-ppm\_\-ascii\_\-data} (String fname, int[$\,$] buff, int width, int height, int samples\_\-per\_\-pixel)
 \begin{CompactList}\small\item\em Standard function that writes values as a pgm (grey) or ppm (color) ascii file. \item\end{CompactList}\item 
@@ -23,23 +23,23 @@ static void {\bf write\_\-binary\_\-pgm\_\-data32} (String fname, int[$\,$] buff
 \subsection*{Static Protected Member Functions}
 \begin{CompactItemize}
 \item 
-static int[$\,$] {\bf read\_\-ascii\_\-pgm\_\-file} (String fname, int[$\,$] w, int[$\,$] h, int[$\,$] min, int[$\,$] max)
+static int[$\,$] {\bf read\_\-ascii\_\-pgm\_\-file} (String fname, out int w, out int h, out int min, out int max)
 \begin{CompactList}\small\item\em This function reads an ascii gray pgm file. \item\end{CompactList}\item 
-static int[$\,$] {\bf read\_\-ascii\_\-ppm\_\-file} (String fname, int[$\,$] w, int[$\,$] h, int[$\,$] min, int[$\,$] max)
+static int[$\,$] {\bf read\_\-ascii\_\-ppm\_\-file} (String fname, out int w, out int h, out int min, out int max)
 \begin{CompactList}\small\item\em This function reads an ascii color ppm file. \item\end{CompactList}\item 
-static int[$\,$] {\bf read\_\-binary\_\-pgm\_\-file} (String fname, int[$\,$] w, int[$\,$] h, int[$\,$] min, int[$\,$] max)
+static int[$\,$] {\bf read\_\-binary\_\-pgm\_\-file} (String fname, out int w, out int h, out int min, out int max)
 \begin{CompactList}\small\item\em This function reads a binary gray pgm file. \item\end{CompactList}\item 
-static int[$\,$] {\bf read\_\-binary\_\-ppm\_\-file} (String fname, int[$\,$] w, int[$\,$] h, int[$\,$] min, int[$\,$] max)
+static int[$\,$] {\bf read\_\-binary\_\-ppm\_\-file} (String fname, out int w, out int h, out int min, out int max)
 \begin{CompactList}\small\item\em This function reads a binary color (rgb, 8-bits per component/24-bits per pixel) ppm file. \item\end{CompactList}\item 
-static String {\bf read\-Header} (Stream\-Reader sr, int[$\,$] w, int[$\,$] h)
+static String {\bf read\-Header} (Stream\-Reader sr, out int w, out int h)
 \begin{CompactList}\small\item\em Read image file header. \item\end{CompactList}\item 
-static int[$\,$] {\bf read\_\-binary\_\-int8s} (String fname, int how\-Many, int[$\,$] max, int[$\,$] min)
+static int[$\,$] {\bf read\_\-binary\_\-int8s} (String fname, int how\-Many, out int max, out int min)
 \begin{CompactList}\small\item\em This function reads binary 8-bit integer values from a file. \item\end{CompactList}\item 
-static int[$\,$] {\bf read\_\-binary\_\-int16s} (String fname, int how\-Many, int[$\,$] max, int[$\,$] min)
+static int[$\,$] {\bf read\_\-binary\_\-int16s} (String fname, int how\-Many, out int max, out int min)
 \begin{CompactList}\small\item\em This function reads binary 16-bit integer values from a file. \item\end{CompactList}\item 
-static int[$\,$] {\bf read\_\-binary\_\-int32s} (String fname, int how\-Many, int[$\,$] max, int[$\,$] min)
+static int[$\,$] {\bf read\_\-binary\_\-int32s} (String fname, int how\-Many, out int max, out int min)
 \begin{CompactList}\small\item\em This function reads binary 32-bit integer values from a file. \item\end{CompactList}\item 
-static int[$\,$] {\bf read\_\-ascii\_\-ints} (Stream\-Reader sr, int how\-Many, int[$\,$] max, int[$\,$] min)
+static int[$\,$] {\bf read\_\-ascii\_\-ints} (Stream\-Reader sr, int how\-Many, out int max, out int min)
 \begin{CompactList}\small\item\em This function reads ascii integer (8-bits or more) values from a file. \item\end{CompactList}\end{CompactItemize}
 \subsection*{Static Private Member Functions}
 \begin{CompactItemize}
@@ -51,16 +51,12 @@ static void {\bf write\-String} (Binary\-Writer wr, String s)
 \subsection{Detailed Description}
 This class contains methods that read and write PNM/PGM/PPM images (color rgb and grey images). 
 
-\begin{Desc}
-\item[{\bf Todo}]george: replace the array params below with {\em out\/} params. \end{Desc}
-
-
 
 
 \subsection{Member Function Documentation}
 \index{CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}!read_ascii_ints@{read\_\-ascii\_\-ints}}
 \index{read_ascii_ints@{read\_\-ascii\_\-ints}!CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-ascii\_\-ints (Stream\-Reader {\em sr}, int {\em how\-Many}, int[$\,$] {\em max}, int[$\,$] {\em min})\hspace{0.3cm}{\tt  [static, protected]}}\label{class_c_s_image_viewer_1_1pnm_helper_6fe0359657ec33392595cf78659fbc9f}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-ascii\_\-ints (Stream\-Reader {\em sr}, int {\em how\-Many}, out int {\em max}, out int {\em min})\hspace{0.3cm}{\tt  [static, protected]}}\label{class_c_s_image_viewer_1_1pnm_helper_74b6ea40f46549d20fb016cf9aea875f}
 
 
 This function reads ascii integer (8-bits or more) values from a file. 
@@ -68,13 +64,13 @@ This function reads ascii integer (8-bits or more) values from a file.
 \begin{Desc}
 \item[Parameters:]
 \begin{description}
-\item[{\em sr}]input image file stream \item[{\em how\-Many}]the number of values to read \item[{\em min}]min[0] will be set to min value in image \item[{\em max}]min[0] will be set to min value in image\end{description}
+\item[{\em sr}]is the input image file stream \item[{\em how\-Many}]is the number of values (not bytes) to read \item[{\em min}]will be set to min value in image \item[{\em max}]will be set to min value in image\end{description}
 \end{Desc}
 \begin{Desc}
-\item[Returns:]array of pixel values as well as min[0] and max[0] will be set \end{Desc}
+\item[Returns:]array of pixel values as well as min and max will be set \end{Desc}
 \index{CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}!read_ascii_pgm_file@{read\_\-ascii\_\-pgm\_\-file}}
 \index{read_ascii_pgm_file@{read\_\-ascii\_\-pgm\_\-file}!CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-ascii\_\-pgm\_\-file (String {\em fname}, int[$\,$] {\em w}, int[$\,$] {\em h}, int[$\,$] {\em min}, int[$\,$] {\em max})\hspace{0.3cm}{\tt  [static, protected]}}\label{class_c_s_image_viewer_1_1pnm_helper_3bd4246b9d877004064ab5792ed6d16d}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-ascii\_\-pgm\_\-file (String {\em fname}, out int {\em w}, out int {\em h}, out int {\em min}, out int {\em max})\hspace{0.3cm}{\tt  [static, protected]}}\label{class_c_s_image_viewer_1_1pnm_helper_3b60f3edcaf62c8e0d8e01383f7e0e32}
 
 
 This function reads an ascii gray pgm file. 
@@ -90,13 +86,13 @@ This type of file is formatted as follows: \small\begin{alltt}
 \begin{Desc}
 \item[Parameters:]
 \begin{description}
-\item[{\em fname}]input image file name \item[{\em w}]w[0] will be set to image width \item[{\em h}]h[0] will be set to image height \item[{\em min}]min[0] will be set to min value in image \item[{\em max}]min[0] will be set to min value in image\end{description}
+\item[{\em fname}]input image file name \item[{\em w}]will be set to the image width \item[{\em h}]will be set to the image height \item[{\em min}]will be set to min value in image \item[{\em max}]will be set to min value in image\end{description}
 \end{Desc}
 \begin{Desc}
-\item[Returns:]array of pixel values (gray) as well as w[0], h[0], min[0], and max[0] will be set \end{Desc}
+\item[Returns:]array of pixel values (gray) as well as w, h, min, and max will be set \end{Desc}
 \index{CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}!read_ascii_ppm_file@{read\_\-ascii\_\-ppm\_\-file}}
 \index{read_ascii_ppm_file@{read\_\-ascii\_\-ppm\_\-file}!CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-ascii\_\-ppm\_\-file (String {\em fname}, int[$\,$] {\em w}, int[$\,$] {\em h}, int[$\,$] {\em min}, int[$\,$] {\em max})\hspace{0.3cm}{\tt  [static, protected]}}\label{class_c_s_image_viewer_1_1pnm_helper_d720e5b006c12f016e792ac0c70ba806}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-ascii\_\-ppm\_\-file (String {\em fname}, out int {\em w}, out int {\em h}, out int {\em min}, out int {\em max})\hspace{0.3cm}{\tt  [static, protected]}}\label{class_c_s_image_viewer_1_1pnm_helper_a184666e0242cb45d7604f8a9828db5f}
 
 
 This function reads an ascii color ppm file. 
@@ -115,13 +111,13 @@ This type of file is formatted as follows: \small\begin{alltt}
 \begin{Desc}
 \item[Parameters:]
 \begin{description}
-\item[{\em fname}]input image file name \item[{\em w}]w[0] will be set to image width \item[{\em h}]h[0] will be set to image height \item[{\em min}]min[0] will be set to min value in image \item[{\em max}]min[0] will be set to min value in image\end{description}
+\item[{\em fname}]input image file name \item[{\em w}]will be set to the image width \item[{\em h}]will be set to the image height \item[{\em min}]will be set to min value in image \item[{\em max}]will be set to min value in image\end{description}
 \end{Desc}
 \begin{Desc}
-\item[Returns:]array of pixel values (color) as well as w[0], h[0], min[0], and max[0] will be set \end{Desc}
+\item[Returns:]array of pixel values (color) as well as w, h, min, and max will be set \end{Desc}
 \index{CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}!read_binary_int16s@{read\_\-binary\_\-int16s}}
 \index{read_binary_int16s@{read\_\-binary\_\-int16s}!CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-binary\_\-int16s (String {\em fname}, int {\em how\-Many}, int[$\,$] {\em max}, int[$\,$] {\em min})\hspace{0.3cm}{\tt  [static, protected]}}\label{class_c_s_image_viewer_1_1pnm_helper_020e23c75bdf1f776395119067076565}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-binary\_\-int16s (String {\em fname}, int {\em how\-Many}, out int {\em max}, out int {\em min})\hspace{0.3cm}{\tt  [static, protected]}}\label{class_c_s_image_viewer_1_1pnm_helper_20a1395c35b68ef2a964d34b3474affb}
 
 
 This function reads binary 16-bit integer values from a file. 
@@ -129,13 +125,13 @@ This function reads binary 16-bit integer values from a file.
 \begin{Desc}
 \item[Parameters:]
 \begin{description}
-\item[{\em fname}]input image file name \item[{\em how\-Many}]the number of values to read \item[{\em min}]min[0] will be set to min value in image \item[{\em max}]min[0] will be set to min value in image\end{description}
+\item[{\em fname}]is the input image file name \item[{\em how\-Many}]is the the number of values (not bytes) to read \item[{\em min}]will be set to min value in image \item[{\em max}]will be set to min value in image\end{description}
 \end{Desc}
 \begin{Desc}
-\item[Returns:]array of pixel values as well as min[0] and max[0] will be set \end{Desc}
+\item[Returns:]array of pixel values as well as min and max will be set \end{Desc}
 \index{CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}!read_binary_int32s@{read\_\-binary\_\-int32s}}
 \index{read_binary_int32s@{read\_\-binary\_\-int32s}!CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-binary\_\-int32s (String {\em fname}, int {\em how\-Many}, int[$\,$] {\em max}, int[$\,$] {\em min})\hspace{0.3cm}{\tt  [static, protected]}}\label{class_c_s_image_viewer_1_1pnm_helper_bd21c52e494d6dda7df0c988a5194651}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-binary\_\-int32s (String {\em fname}, int {\em how\-Many}, out int {\em max}, out int {\em min})\hspace{0.3cm}{\tt  [static, protected]}}\label{class_c_s_image_viewer_1_1pnm_helper_1cfac7ded3b4522ee9ee39776fe004a4}
 
 
 This function reads binary 32-bit integer values from a file. 
@@ -143,13 +139,13 @@ This function reads binary 32-bit integer values from a file.
 \begin{Desc}
 \item[Parameters:]
 \begin{description}
-\item[{\em fname}]input image file name \item[{\em how\-Many}]the number of values to read \item[{\em min}]min[0] will be set to min value in image \item[{\em max}]min[0] will be set to min value in image\end{description}
+\item[{\em fname}]is the input image file name \item[{\em how\-Many}]is the number of values (not bytes) to read \item[{\em min}]will be set to min value in image \item[{\em max}]will be set to min value in image\end{description}
 \end{Desc}
 \begin{Desc}
-\item[Returns:]array of pixel values as well as min[0] and max[0] will be set \end{Desc}
+\item[Returns:]array of pixel values as well as min and max will be set \end{Desc}
 \index{CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}!read_binary_int8s@{read\_\-binary\_\-int8s}}
 \index{read_binary_int8s@{read\_\-binary\_\-int8s}!CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-binary\_\-int8s (String {\em fname}, int {\em how\-Many}, int[$\,$] {\em max}, int[$\,$] {\em min})\hspace{0.3cm}{\tt  [static, protected]}}\label{class_c_s_image_viewer_1_1pnm_helper_f566cc8ea17d5d3a35d8e49a747c9fb8}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-binary\_\-int8s (String {\em fname}, int {\em how\-Many}, out int {\em max}, out int {\em min})\hspace{0.3cm}{\tt  [static, protected]}}\label{class_c_s_image_viewer_1_1pnm_helper_aec73e6bedb159d8b8f6b6258b4aff13}
 
 
 This function reads binary 8-bit integer values from a file. 
@@ -157,13 +153,13 @@ This function reads binary 8-bit integer values from a file.
 \begin{Desc}
 \item[Parameters:]
 \begin{description}
-\item[{\em fname}]input image file name \item[{\em how\-Many}]the number of values to read \item[{\em min}]min[0] will be set to min value in image \item[{\em max}]min[0] will be set to min value in image\end{description}
+\item[{\em fname}]is the input image file name \item[{\em how\-Many}]is the number of values (not bytes) to read \item[{\em min}]will be set to min value in image \item[{\em max}]will be set to min value in image\end{description}
 \end{Desc}
 \begin{Desc}
-\item[Returns:]array of pixel values as well as min[0] and max[0] will be set \end{Desc}
+\item[Returns:]array of pixel values as well as min and max will be set \end{Desc}
 \index{CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}!read_binary_pgm16_file@{read\_\-binary\_\-pgm16\_\-file}}
 \index{read_binary_pgm16_file@{read\_\-binary\_\-pgm16\_\-file}!CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-binary\_\-pgm16\_\-file (String {\em fname}, int[$\,$] {\em w}, int[$\,$] {\em h}, int[$\,$] {\em min}, int[$\,$] {\em max})\hspace{0.3cm}{\tt  [static]}}\label{class_c_s_image_viewer_1_1pnm_helper_1e7365b006549d4971e267f5378e3290}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-binary\_\-pgm16\_\-file (String {\em fname}, out int {\em w}, out int {\em h}, out int {\em min}, out int {\em max})\hspace{0.3cm}{\tt  [static]}}\label{class_c_s_image_viewer_1_1pnm_helper_b5890bff21ce0535e4425a166e8dc7b6}
 
 
 {\bf Non-standard} function that reads 16-bit values as a binary pgm file ({\bf not implemented yet}). 
@@ -171,13 +167,13 @@ This function reads binary 8-bit integer values from a file.
 \begin{Desc}
 \item[Parameters:]
 \begin{description}
-\item[{\em fname}]input image file name \item[{\em w}]w[0] will be set to image width \item[{\em h}]h[0] will be set to image height \item[{\em min}]min[0] will be set to min value in image \item[{\em max}]min[0] will be set to min value in image\end{description}
+\item[{\em fname}]input image file name \item[{\em w}]will be set to image width \item[{\em h}]will be set to image height \item[{\em min}]will be set to min value in image \item[{\em max}]will be set to min value in image\end{description}
 \end{Desc}
 \begin{Desc}
-\item[Returns:]array of pixel values (gray) as well as w[0], h[0], min[0], and max[0] will be set \end{Desc}
+\item[Returns:]array of pixel values (gray) as well as w, h, min, and max will be set \end{Desc}
 \index{CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}!read_binary_pgm32_file@{read\_\-binary\_\-pgm32\_\-file}}
 \index{read_binary_pgm32_file@{read\_\-binary\_\-pgm32\_\-file}!CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-binary\_\-pgm32\_\-file (String {\em fname}, int[$\,$] {\em w}, int[$\,$] {\em h}, int[$\,$] {\em min}, int[$\,$] {\em max})\hspace{0.3cm}{\tt  [static]}}\label{class_c_s_image_viewer_1_1pnm_helper_f442d2c5f29538b8846cf9f5315a5f43}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-binary\_\-pgm32\_\-file (String {\em fname}, out int {\em w}, out int {\em h}, out int {\em min}, out int {\em max})\hspace{0.3cm}{\tt  [static]}}\label{class_c_s_image_viewer_1_1pnm_helper_5e15c7534f8d2fad9be751a869dc5efe}
 
 
 {\bf Non-standard} function that reads 32-bit values as a binary pgm file ({\bf not implemented yet}). 
@@ -185,13 +181,13 @@ This function reads binary 8-bit integer values from a file.
 \begin{Desc}
 \item[Parameters:]
 \begin{description}
-\item[{\em fname}]input image file name \item[{\em w}]w[0] will be set to image width \item[{\em h}]h[0] will be set to image height \item[{\em min}]min[0] will be set to min value in image \item[{\em max}]min[0] will be set to min value in image\end{description}
+\item[{\em fname}]input image file name \item[{\em w}]will be set to image width \item[{\em h}]will be set to image height \item[{\em min}]will be set to min value in image \item[{\em max}]will be set to min value in image\end{description}
 \end{Desc}
 \begin{Desc}
-\item[Returns:]array of pixel values (gray) as well as w[0], h[0], min[0], and max[0] will be set \end{Desc}
+\item[Returns:]array of pixel values (gray) as well as w, h, min, and max will be set \end{Desc}
 \index{CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}!read_binary_pgm_file@{read\_\-binary\_\-pgm\_\-file}}
 \index{read_binary_pgm_file@{read\_\-binary\_\-pgm\_\-file}!CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-binary\_\-pgm\_\-file (String {\em fname}, int[$\,$] {\em w}, int[$\,$] {\em h}, int[$\,$] {\em min}, int[$\,$] {\em max})\hspace{0.3cm}{\tt  [static, protected]}}\label{class_c_s_image_viewer_1_1pnm_helper_3f3225357e1bccdb373db8251b629030}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-binary\_\-pgm\_\-file (String {\em fname}, out int {\em w}, out int {\em h}, out int {\em min}, out int {\em max})\hspace{0.3cm}{\tt  [static, protected]}}\label{class_c_s_image_viewer_1_1pnm_helper_4998c73034df68afc294e0be9235e2cc}
 
 
 This function reads a binary gray pgm file. 
@@ -207,13 +203,13 @@ This type of file is formatted as follows: \small\begin{alltt}
 \begin{Desc}
 \item[Parameters:]
 \begin{description}
-\item[{\em fname}]input image file name \item[{\em w}]w[0] will be set to image width \item[{\em h}]h[0] will be set to image height \item[{\em min}]min[0] will be set to min value in image \item[{\em max}]min[0] will be set to min value in image\end{description}
+\item[{\em fname}]input image file name \item[{\em w}]will be set to the image width \item[{\em h}]will be set to the image height \item[{\em min}]will be set to min value in image \item[{\em max}]will be set to min value in image\end{description}
 \end{Desc}
 \begin{Desc}
-\item[Returns:]array of pixel values (gray) as well as w[0], h[0], min[0], and max[0] will be set \end{Desc}
+\item[Returns:]array of pixel values (gray) as well as w, h, min, and max will be set \end{Desc}
 \index{CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}!read_binary_ppm_file@{read\_\-binary\_\-ppm\_\-file}}
 \index{read_binary_ppm_file@{read\_\-binary\_\-ppm\_\-file}!CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-binary\_\-ppm\_\-file (String {\em fname}, int[$\,$] {\em w}, int[$\,$] {\em h}, int[$\,$] {\em min}, int[$\,$] {\em max})\hspace{0.3cm}{\tt  [static, protected]}}\label{class_c_s_image_viewer_1_1pnm_helper_aac77a4848c332712dd805d33b9d815b}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-binary\_\-ppm\_\-file (String {\em fname}, out int {\em w}, out int {\em h}, out int {\em min}, out int {\em max})\hspace{0.3cm}{\tt  [static, protected]}}\label{class_c_s_image_viewer_1_1pnm_helper_995555dda732256678609a16427524aa}
 
 
 This function reads a binary color (rgb, 8-bits per component/24-bits per pixel) ppm file. 
@@ -232,13 +228,13 @@ This type of file is formatted as follows: \small\begin{alltt}
 \begin{Desc}
 \item[Parameters:]
 \begin{description}
-\item[{\em fname}]input image file name \item[{\em w}]w[0] will be set to image width \item[{\em h}]h[0] will be set to image height \item[{\em min}]min[0] will be set to min value in image \item[{\em max}]min[0] will be set to min value in image\end{description}
+\item[{\em fname}]input image file name \item[{\em w}]will be set to the image width \item[{\em h}]will be set to the image height \item[{\em min}]will be set to min value in image \item[{\em max}]will be set to min value in image\end{description}
 \end{Desc}
 \begin{Desc}
-\item[Returns:]array of pixel values (color) as well as w[0], h[0], min[0], and max[0] will be set \end{Desc}
+\item[Returns:]array of pixel values (color) as well as w, h, min, and max will be set \end{Desc}
 \index{CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}!read_pnm_file@{read\_\-pnm\_\-file}}
 \index{read_pnm_file@{read\_\-pnm\_\-file}!CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-pnm\_\-file (String {\em fname}, int[$\,$] {\em w}, int[$\,$] {\em h}, int[$\,$] {\em samples\-Per\-Pixel}, int[$\,$] {\em min}, int[$\,$] {\em max})\hspace{0.3cm}{\tt  [static]}}\label{class_c_s_image_viewer_1_1pnm_helper_06e33b709cf385d3b8e5d33a1064acb0}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static int [$\,$] read\_\-pnm\_\-file (String {\em fname}, out int {\em w}, out int {\em h}, out int {\em samples\-Per\-Pixel}, out int {\em min}, out int {\em max})\hspace{0.3cm}{\tt  [static]}}\label{class_c_s_image_viewer_1_1pnm_helper_5f89692349ec01bcc8017090c900c15f}
 
 
 {\bf  This method should be generally used to read any pnm (pgm grey, ppm color) binary or ascii image files. } 
@@ -248,13 +244,13 @@ This type of file is formatted as follows: \small\begin{alltt}
 \begin{Desc}
 \item[Parameters:]
 \begin{description}
-\item[{\em fname}]input image file name \item[{\em w}]w[0] will be set to image width \item[{\em h}]h[0] will be set to image height \item[{\em samples\-Per\-Pixel}]samples\-Per\-Pixel[0] will be set to 1 (gray) or 3 (color) \item[{\em min}]min[0] will be set to min value in image \item[{\em max}]min[0] will be set to min value in image\end{description}
+\item[{\em fname}]input image file name \item[{\em w}]will be set to image width \item[{\em h}]will be set to image height \item[{\em samples\-Per\-Pixel}]samples\-Per\-Pixel[0] will be set to 1 (gray) or 3 (color) \item[{\em min}]will be set to min value in image \item[{\em max}]will be set to min value in image\end{description}
 \end{Desc}
 \begin{Desc}
-\item[Returns:]array of pixel values (rgb or gray) as well as w[0], h[0], samples\-Per\-Pixel[0], min[0], and max[0] will be set \end{Desc}
+\item[Returns:]array of pixel values (rgb or gray) as well as w, h, samples\-Per\-Pixel, min, and max will be set \end{Desc}
 \index{CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}!readHeader@{readHeader}}
 \index{readHeader@{readHeader}!CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static String read\-Header (Stream\-Reader {\em sr}, int[$\,$] {\em w}, int[$\,$] {\em h})\hspace{0.3cm}{\tt  [static, protected]}}\label{class_c_s_image_viewer_1_1pnm_helper_6767fccaf89d076447d11791292e67ae}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}static String read\-Header (Stream\-Reader {\em sr}, out int {\em w}, out int {\em h})\hspace{0.3cm}{\tt  [static, protected]}}\label{class_c_s_image_viewer_1_1pnm_helper_a99b654bc67e0f3e658ea79b92aa7b3c}
 
 
 Read image file header. 
@@ -262,10 +258,10 @@ Read image file header.
 \begin{Desc}
 \item[Parameters:]
 \begin{description}
-\item[{\em sr}]input image stream \item[{\em w}]w[0] will be set to image width \item[{\em h}]h[0] will be set to image height\end{description}
+\item[{\em sr}]is the input image stream \item[{\em w}]will be set to image width \item[{\em h}]will be set to image height\end{description}
 \end{Desc}
 \begin{Desc}
-\item[Returns:]string indicating image file type as well as w[0] and h[0] will be set \end{Desc}
+\item[Returns:]string indicating image file type as well as w and h will be set \end{Desc}
 \index{CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}!write_binary_pgm_data16@{write\_\-binary\_\-pgm\_\-data16}}
 \index{write_binary_pgm_data16@{write\_\-binary\_\-pgm\_\-data16}!CSImageViewer::pnmHelper@{CSImage\-Viewer::pnm\-Helper}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}static void write\_\-binary\_\-pgm\_\-data16 (String {\em fname}, int[$\,$] {\em buff}, int {\em width}, int {\em height})\hspace{0.3cm}{\tt  [static]}}\label{class_c_s_image_viewer_1_1pnm_helper_b9389279b59ecaff8492133a68a59b98}

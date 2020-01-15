@@ -17,11 +17,10 @@ namespace CSImageViewer {
          * and http://soundfile.sapp.org/doc/WaveFormat/
          * and http://www.lightlink.com/tjweber/StripWav/WAVE.html
          * and http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/WAVE.html
-         * @todo george: replace the array params below with <em>out</em> params.
          */
-        public static int[] read ( String fname, int[] w, int[] h, int[] min, int[] max ) {
+        public static int[] read ( String fname, out int w, out int h, out int min, out int max ) {
             //init additional return values
-            w[ 0 ] = h[ 0 ] = min[ 0 ] = max[ 0 ] = 0;
+            w = h = min = max = 0;
 
             //open the input data file
             FileStream   fs = new FileStream( fname, FileMode.Open, FileAccess.Read );
@@ -98,50 +97,50 @@ namespace CSImageViewer {
 
             //at this point, we need to have discovered at least an 'fmt ' chunk and a 'data' chunk.
             Debug.Assert( fmtFound && dataFound );
-            w[ 0 ] = channels;
+            w = channels;
             int bytesPerSample = bitsPerSample / 8;
             Debug.Assert( 1 <= bytesPerSample && bytesPerSample <= 4 );
-            h[ 0 ] = (int)(dataSize / bytesPerSample / channels);
+            h = (int)(dataSize / bytesPerSample / channels);
 
             /** @todo: george - needs work. 8-bit ints unsigned? 16, 24, 32-bit ints signed? 32-bit floats? */
             /** @todo: george - need to determine min and max */
-            int[] result = new int[ w[ 0 ] * h[ 0 ] ];
+            int[] result = new int[ w * h ];
             if (bytesPerSample == 1) {
-                min[ 0 ] = max[ 0 ] = data[ 0 ];
-                for (int i=0; i<w[0]*h[0]; i++) {
+                min = max = data[ 0 ];
+                for (int i=0; i<w*h; i++) {
                     result[i] = data[i];
-                    if (result[ i ] < min[ 0 ])
-                        min[ 0 ] = result[ i ];
-                    if (result[ i ] > max[ 0 ])
-                        max[ 0 ] = result[ i ];
+                    if (result[ i ] < min)
+                        min = result[ i ];
+                    if (result[ i ] > max)
+                        max = result[ i ];
                 }
             } else if (bytesPerSample == 2) {
-                min[ 0 ] = max[ 0 ] = data[ 0 ] + (data[ 1 ] << 8);
-                for (int i=0,j=0; i<w[0]*h[0]; i++,j+=2) {
+                min = max = data[ 0 ] + (data[ 1 ] << 8);
+                for (int i=0,j=0; i<w*h; i++,j+=2) {
                     result[i] = data[j] + (data[j+1]<<8);
-                    if (result[ i ] < min[ 0 ])
-                        min[ 0 ] = result[ i ];
-                    if (result[ i ] > max[ 0 ])
-                        max[ 0 ] = result[ i ];
+                    if (result[ i ] < min)
+                        min = result[ i ];
+                    if (result[ i ] > max)
+                        max = result[ i ];
                 }
             } else if (bytesPerSample == 3) {
-                min[ 0 ] = max[ 0 ] = data[ 0 ] + (data[ 1 ] << 8) + (data[ 2 ] << 16);
-                for (int i = 0, j = 0; i < w[ 0 ] * h[ 0 ]; i++,j += 3) {
+                min = max = data[ 0 ] + (data[ 1 ] << 8) + (data[ 2 ] << 16);
+                for (int i = 0, j = 0; i < w * h; i++,j += 3) {
                     result[ i ] = data[ j ] + (data[ j + 1 ] << 8) + (data[ j + 2 ] << 16);
-                    if (result[ i ] < min[ 0 ])
-                        min[ 0 ] = result[ i ];
-                    if (result[ i ] > max[ 0 ])
-                        max[ 0 ] = result[ i ];
+                    if (result[ i ] < min)
+                        min = result[ i ];
+                    if (result[ i ] > max)
+                        max = result[ i ];
                 }
             } else if (bytesPerSample == 4) {
                 if (formatTag == 1) {
-                    min[ 0 ] = max[ 0 ] = data[ 0 ] + (data[ 1 ] << 8) + (data[ 2 ] << 16) + (data[ 3 ] << 24);
-                    for (int i = 0, j = 0; i < w[ 0 ] * h[ 0 ]; i++, j += 4) {
+                    min = max = data[ 0 ] + (data[ 1 ] << 8) + (data[ 2 ] << 16) + (data[ 3 ] << 24);
+                    for (int i = 0, j = 0; i < w * h; i++, j += 4) {
                         result[ i ] = data[ j ] + (data[ j + 1 ] << 8) + (data[ j + 2 ] << 16) + (data[ j + 3 ] << 24);
-                        if (result[ i ] < min[ 0 ])
-                            min[ 0 ] = result[ i ];
-                        if (result[ i ] > max[ 0 ])
-                            max[ 0 ] = result[ i ];
+                        if (result[ i ] < min)
+                            min = result[ i ];
+                        if (result[ i ] > max)
+                            max = result[ i ];
                     }
                 } else if (formatTag == 3) {
                     Debug.Assert( dataFound );
@@ -150,7 +149,7 @@ namespace CSImageViewer {
                      * @todo: george - need to convert floats to ints; tricky.
                      * need to load floats, determine float min and max, then scale using min and max (but of what intdata type?)
                      */
-                    float[] buff = new float[ w[0]*h[0] ];
+                    float[] buff = new float[ w*h ];
 
                     //a better (safe) way to do the code below would be to replace it with BitConverter.ToSingle(Byte[], Int32)
 
@@ -160,7 +159,7 @@ namespace CSImageViewer {
                         float f = *fptr;
                         float fMin = f;
                         float fMax = f;
-                        for (int i=1,j=4; i < w[ 0 ] * h[ 0 ]; i++,j+=4) {
+                        for (int i=1,j=4; i < w * h; i++,j+=4) {
                             x = data[j] + (data[j+1]<<8) + (data[j+2]<<16) + (data[j+3]<<24);
                             fptr = (float*) &x;
                             f = *fptr;

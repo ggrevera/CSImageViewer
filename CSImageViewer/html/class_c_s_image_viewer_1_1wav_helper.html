@@ -25,11 +25,11 @@
 <h1>wavHelper Class Reference</h1><!-- doxytag: class="CSImageViewer::wavHelper" --><a href="class_c_s_image_viewer_1_1wav_helper-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static int[]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_s_image_viewer_1_1wav_helper.html#4589e2b0a539d4d8967a87103d03618a">read</a> (String fname, int[] w, int[] h, int[] min, int[] max)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static int[]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_s_image_viewer_1_1wav_helper.html#82fc29c317a64b6536d17d07faecf798">read</a> (String fname, out int w, out int h, out int min, out int max)</td></tr>
 
 </table>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="4589e2b0a539d4d8967a87103d03618a"></a><!-- doxytag: member="CSImageViewer::wavHelper::read" ref="4589e2b0a539d4d8967a87103d03618a" args="(String fname, int[] w, int[] h, int[] min, int[] max)" --><p>
+<a class="anchor" name="82fc29c317a64b6536d17d07faecf798"></a><!-- doxytag: member="CSImageViewer::wavHelper::read" ref="82fc29c317a64b6536d17d07faecf798" args="(String fname, out int w, out int h, out int min, out int max)" --><p>
 <table class="mdTable" cellpadding="2" cellspacing="0">
   <tr>
     <td class="mdRow">
@@ -43,25 +43,25 @@
         <tr>
           <td class="md" nowrap align="right"></td>
           <td class="md"></td>
-          <td class="md" nowrap>int[]&nbsp;</td>
+          <td class="md" nowrap>out int&nbsp;</td>
           <td class="mdname" nowrap> <em>w</em>, </td>
         </tr>
         <tr>
           <td class="md" nowrap align="right"></td>
           <td class="md"></td>
-          <td class="md" nowrap>int[]&nbsp;</td>
+          <td class="md" nowrap>out int&nbsp;</td>
           <td class="mdname" nowrap> <em>h</em>, </td>
         </tr>
         <tr>
           <td class="md" nowrap align="right"></td>
           <td class="md"></td>
-          <td class="md" nowrap>int[]&nbsp;</td>
+          <td class="md" nowrap>out int&nbsp;</td>
           <td class="mdname" nowrap> <em>min</em>, </td>
         </tr>
         <tr>
           <td class="md" nowrap align="right"></td>
           <td class="md"></td>
-          <td class="md" nowrap>int[]&nbsp;</td>
+          <td class="md" nowrap>out int&nbsp;</td>
           <td class="mdname" nowrap> <em>max</em></td>
         </tr>
         <tr>
@@ -81,17 +81,17 @@
     <td>
 
 <p>
-based on <a href="https://gist.github.com/yomakkkk/2290864">https://gist.github.com/yomakkkk/2290864</a> and <a href="http://soundfile.sapp.org/doc/WaveFormat/">http://soundfile.sapp.org/doc/WaveFormat/</a> and <a href="http://www.lightlink.com/tjweber/StripWav/WAVE.html">http://www.lightlink.com/tjweber/StripWav/WAVE.html</a> and <a href="http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/WAVE.html">http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/WAVE.html</a> <dl compact><dt><b><a class="el" href="todo.html#_todo000009">Todo:</a></b></dt><dd>george: replace the array params below with <em>out</em> params. </dd></dl>
-<dl compact><dt><b><a class="el" href="todo.html#_todo000009">Todo:</a></b></dt><dd>: george - needs work. 8-bit ints unsigned? 16, 24, 32-bit ints signed? 32-bit floats? </dd></dl>
-<dl compact><dt><b><a class="el" href="todo.html#_todo000009">Todo:</a></b></dt><dd>: george - need to determine min and max </dd></dl>
+based on <a href="https://gist.github.com/yomakkkk/2290864">https://gist.github.com/yomakkkk/2290864</a> and <a href="http://soundfile.sapp.org/doc/WaveFormat/">http://soundfile.sapp.org/doc/WaveFormat/</a> and <a href="http://www.lightlink.com/tjweber/StripWav/WAVE.html">http://www.lightlink.com/tjweber/StripWav/WAVE.html</a> and <a href="http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/WAVE.html">http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/WAVE.html</a><p>
+<dl compact><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd>: george - needs work. 8-bit ints unsigned? 16, 24, 32-bit ints signed? 32-bit floats? </dd></dl>
+<dl compact><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd>: george - need to determine min and max </dd></dl>
 <p>
-<dl compact><dt><b><a class="el" href="todo.html#_todo000009">Todo:</a></b></dt><dd>: george - need to convert floats to ints; tricky. need to load floats, determine float min and max, then scale using min and max (but of what intdata type?) </dd></dl>
+<dl compact><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd>: george - need to convert floats to ints; tricky. need to load floats, determine float min and max, then scale using min and max (but of what intdata type?) </dd></dl>
     </td>
   </tr>
 </table>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="wav_helper_8cs.html">wavHelper.cs</a></ul>
 <hr size="1"><address style="align: right;"><small>
-<img src="../bg.gif"> Generated on Mon Jan 13 15:04:51 2020 for CSImageViewer by&nbsp;<a href="http://www.doxygen.org/index.html"><img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.4.6-NO</small></address>
+<img src="../bg.gif"> Generated on Wed Jan 15 11:49:42 2020 for CSImageViewer by&nbsp;<a href="http://www.doxygen.org/index.html"><img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.4.6-NO</small></address>
 </body>
 </html>

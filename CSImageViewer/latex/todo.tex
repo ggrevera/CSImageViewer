@@ -19,41 +19,31 @@
 \item[Member {\bf CSImage\-Viewer::Gray\-Image\-Data::get\-Gray}{\rm (p.\,\pageref{class_c_s_image_viewer_1_1_gray_image_data_dcb7178c700e5ead72cd80cf91d05c2e})}(int row, int col) ]george: speed up indexing \end{description}
 
 
-\label{todo__todo000005}
- \begin{description}
-\item[Class {\bf pnm\-Helper}{\rm (p.\,\pageref{class_c_s_image_viewer_1_1pnm_helper})} ]george: replace the array params below with {\em out\/} params. \end{description}
-
-
-\label{todo__todo000007}
+\label{todo__todo000006}
  \begin{description}
 \item[Member {\bf CSImage\-Viewer::pnm\-Helper::write\_\-binary\_\-pgm\_\-data16}{\rm (p.\,\pageref{class_c_s_image_viewer_1_1pnm_helper_b9389279b59ecaff8492133a68a59b98})}(String fname, int\mbox{[}\mbox{]} buff, int width, int height) ]below could be made more efficient by replacing it with fewer, larger buffer writes \end{description}
 
 
-\label{todo__todo000008}
+\label{todo__todo000007}
  \begin{description}
 \item[Member {\bf CSImage\-Viewer::pnm\-Helper::write\_\-binary\_\-pgm\_\-data32}{\rm (p.\,\pageref{class_c_s_image_viewer_1_1pnm_helper_37c7b83d8f17d8e3c8a8ecafe511d070})}(String fname, int\mbox{[}\mbox{]} buff, int width, int height) ]below could be made more efficient by replacing it with fewer, larger buffer writes \end{description}
 
 
-\label{todo__todo000006}
+\label{todo__todo000005}
  \begin{description}
 \item[Member {\bf CSImage\-Viewer::pnm\-Helper::write\_\-binary\_\-pgm\_\-or\_\-ppm\_\-data8}{\rm (p.\,\pageref{class_c_s_image_viewer_1_1pnm_helper_60a4449366845ae713e39edda7adfed1})}(String fname, int\mbox{[}\mbox{]} buff, int width, int height, int samples\_\-per\_\-pixel) ]below could be made more efficient by replacing it with fewer, larger buffer writes \end{description}
 
 
-\label{todo__todo000009}
+\label{todo__todo000008}
  \begin{description}
-\item[Member {\bf CSImage\-Viewer::wav\-Helper::read}{\rm (p.\,\pageref{class_c_s_image_viewer_1_1wav_helper_4589e2b0a539d4d8967a87103d03618a})}(String fname, int\mbox{[}\mbox{]} w, int\mbox{[}\mbox{]} h, int\mbox{[}\mbox{]} min, int\mbox{[}\mbox{]} max) ]george: replace the array params below with {\em out\/} params. \end{description}
+\item[Member {\bf CSImage\-Viewer::wav\-Helper::read}{\rm (p.\,\pageref{class_c_s_image_viewer_1_1wav_helper_82fc29c317a64b6536d17d07faecf798})}(String fname, out int w, out int h, out int min, out int max) ]: george - needs work. 8-bit ints unsigned? 16, 24, 32-bit ints signed? 32-bit floats? \end{description}
 
 
-\label{todo__todo000009}
+\label{todo__todo000008}
  \begin{description}
-\item[Member {\bf CSImage\-Viewer::wav\-Helper::read}{\rm (p.\,\pageref{class_c_s_image_viewer_1_1wav_helper_4589e2b0a539d4d8967a87103d03618a})}(String fname, int\mbox{[}\mbox{]} w, int\mbox{[}\mbox{]} h, int\mbox{[}\mbox{]} min, int\mbox{[}\mbox{]} max) ]: george - needs work. 8-bit ints unsigned? 16, 24, 32-bit ints signed? 32-bit floats? \end{description}
+\item[Member {\bf CSImage\-Viewer::wav\-Helper::read}{\rm (p.\,\pageref{class_c_s_image_viewer_1_1wav_helper_82fc29c317a64b6536d17d07faecf798})}(String fname, out int w, out int h, out int min, out int max) ]: george - need to determine min and max \end{description}
 
 
-\label{todo__todo000009}
+\label{todo__todo000008}
  \begin{description}
-\item[Member {\bf CSImage\-Viewer::wav\-Helper::read}{\rm (p.\,\pageref{class_c_s_image_viewer_1_1wav_helper_4589e2b0a539d4d8967a87103d03618a})}(String fname, int\mbox{[}\mbox{]} w, int\mbox{[}\mbox{]} h, int\mbox{[}\mbox{]} min, int\mbox{[}\mbox{]} max) ]: george - need to determine min and max \end{description}
-
-
-\label{todo__todo000009}
- \begin{description}
-\item[Member {\bf CSImage\-Viewer::wav\-Helper::read}{\rm (p.\,\pageref{class_c_s_image_viewer_1_1wav_helper_4589e2b0a539d4d8967a87103d03618a})}(String fname, int\mbox{[}\mbox{]} w, int\mbox{[}\mbox{]} h, int\mbox{[}\mbox{]} min, int\mbox{[}\mbox{]} max) ]: george - need to convert floats to ints; tricky. need to load floats, determine float min and max, then scale using min and max (but of what intdata type?) \end{description}
+\item[Member {\bf CSImage\-Viewer::wav\-Helper::read}{\rm (p.\,\pageref{class_c_s_image_viewer_1_1wav_helper_82fc29c317a64b6536d17d07faecf798})}(String fname, out int w, out int h, out int min, out int max) ]: george - need to convert floats to ints; tricky. need to load floats, determine float min and max, then scale using min and max (but of what intdata type?) \end{description}

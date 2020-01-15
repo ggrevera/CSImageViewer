@@ -28,7 +28,6 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
-//using System.Text;
 //----------------------------------------------------------------------
 #pragma warning disable IDE1006
 

@@ -27,8 +27,6 @@
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
-//using System.Collections.Generic;
-//using System.Text;
 using System.Windows.Forms;
 //------------------------------------------------------------------------
 #pragma warning disable IDE1006
@@ -96,45 +94,42 @@ namespace CSImageViewer {
 
             if (up.EndsWith( ".PPM" ) || up.EndsWith( ".PNM" ) || up.EndsWith( ".PGM" )) {
                 //technique (trick? kludge?) to implement pass-by-reference
-                int[] w   = new int[ 1 ];
-                int[] h   = new int[ 1 ];
-                int[] spp = new int[ 1 ];
-                int[] min = new int[ 1 ];
-                int[] max = new int[ 1 ];
-                int[] originalData = pnmHelper.read_pnm_file( fileName, w, h, spp, min, max );
+                int w, h, spp, min, max;
+                int[] originalData = pnmHelper.read_pnm_file( fileName, out w, out h, out spp, out min, out max );
                 t.print();
-                if (max[ 0 ] > 255)
-                    MessageBox.Show( "Warning:\n\nMax value of " + max[ 0 ] + " exceeds limit of 255." );
-                if (spp[ 0 ] == 3) {
-                    id = new ColorImageData( originalData, w[ 0 ], h[ 0 ] );
+                if (max > 255)
+                    MessageBox.Show( "Warning:\n\nMax value of " + max + " exceeds limit of 255." );
+                if (spp == 3) {
+                    id = new ColorImageData( originalData, w, h );
                     id.mFname = fileName;
+                    Console.WriteLine( id );
                     return id;
                 }
-                if (spp[ 0 ] == 1) {
-                    id = new GrayImageData( originalData, w[ 0 ], h[ 0 ] );
+                if (spp == 1) {
+                    id = new GrayImageData( originalData, w, h );
                     id.mFname = fileName;
+                    Console.WriteLine( id );
                     return id;
                 }
+                MessageBox.Show( "Error:\n\n    Cannot read this file!" );
                 return null;
             }
 
             if (up.EndsWith( ".WAV" )) {
                 //basically treat audio wave files like 2d gray files (which are probably wide but not very high)
                 //technique (trick? kludge?) to implement pass-by-reference
-                int[] w   = new int[ 1 ];
-                int[] h   = new int[ 1 ];
-                int[] spp = new int[ 1 ];
-                int[] min = new int[ 1 ];
-                int[] max = new int[ 1 ];
-                int[] originalData = wavHelper.read( fileName, w, h, min, max );
+                int w, h, min, max;
+                int[] originalData = wavHelper.read( fileName, out w, out h, out min, out max );
                 t.print();
-                id = new GrayImageData( originalData, w[ 0 ], h[ 0 ] );
-                id.mFname = fileName;
+                id = new GrayImageData( originalData, w, h );
+                id.mFname   = fileName;
                 id.mIsAudio = true;
+                Console.WriteLine( id );
                 return id;
             }
 
-            Console.WriteLine( "here" );
+            //here for image file types such as gif, jpg, bmp, etc. (but not ppm, pnm, pgm, or wav).
+
             //see http://www.bobpowell.net/lockingbits.htm for description of Bitmap pixel access.
             Bitmap  bm = (Bitmap) Bitmap.FromFile( fileName, false );
             t.print();
@@ -165,6 +160,7 @@ namespace CSImageViewer {
                     else
                         id = new ColorImageData( bm, bm.Palette.Entries, bpp );
                     id.mFname = fileName;
+                    Console.WriteLine( id );
                     return id;
 
                 case PixelFormat.Format16bppGrayScale:
@@ -181,6 +177,7 @@ namespace CSImageViewer {
                 case PixelFormat.Format32bppRgb:
                     id = new ColorImageData( bm );
                     id.mFname = fileName;
+                    Console.WriteLine( id );
                     return id;
 
                 case PixelFormat.Format48bppRgb:
@@ -193,6 +190,7 @@ namespace CSImageViewer {
                 case PixelFormat.Format32bppArgb:
                     id = new ColorImageData( bm );
                     id.mFname = fileName;
+                    Console.WriteLine( id );
                     return id;
 
                 case PixelFormat.Format64bppArgb:
@@ -205,7 +203,20 @@ namespace CSImageViewer {
                     MessageBox.Show( "Sorry!\n\n Unsupported PixelFormat - Format64bppPArgb." );
                     break;
             }
+
+            MessageBox.Show( "Error:\n\n    Cannot read this file!" );
             return null;
+        }
+        //----------------------------------------------------------------
+        /** ye olde tostringe methode.
+         * see https://en.wikipedia.org/wiki/JSON for an example of JSON.
+         */
+        override public string ToString ( ) {
+            return "{ \n"
+                + "    \"mMax\": "          + mMax + ", \n"
+                + "    \"mDisplayData\": "  + "[...], \n"            //good enough for arrays
+                + "    \"mDisplayImage\": " + mDisplayImage + " \n"  //good enough other contained objects
+                + "}";
         }
         //----------------------------------------------------------------
         /** \brief    Save the display image to a file.

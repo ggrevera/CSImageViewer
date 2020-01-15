@@ -34,7 +34,6 @@ namespace CSImageViewer {
 
     /** \brief  This class contains methods that read and write
      *  PNM/PGM/PPM images (color rgb and grey images).
-     * @todo george: replace the array params below with <em>out</em> params.
      */
     class pnmHelper {
 
@@ -47,49 +46,49 @@ namespace CSImageViewer {
          *  in the case of color data, the first entry is the red, the second the green, and the third the blue.
          *
          *  \param  fname  input image file name
-         *  \param  w      w[0] will be set to image width
-         *  \param  h      h[0] will be set to image height
+         *  \param  w      will be set to image width
+         *  \param  h      will be set to image height
          *  \param  samplesPerPixel  samplesPerPixel[0] will be set to 1 (gray) or 3 (color)
-         *  \param  min    min[0] will be set to min value in image
-         *  \param  max    min[0] will be set to min value in image
+         *  \param  min    will be set to min value in image
+         *  \param  max    will be set to min value in image
          *
-         *  \returns  array of pixel values (rgb or gray)
-         *  as well as w[0], h[0], samplesPerPixel[0], min[0], and max[0]
-         *  will be set
+         *  \returns  array of pixel values (rgb or gray) as well as 
+         *  w, h, samplesPerPixel, min, and max will be set
          */
-        public static int[] read_pnm_file ( String fname, int[] w, int[] h, int[] samplesPerPixel, int[] min, int[] max )
+        public static int[] read_pnm_file ( String fname, out int w, out int h, out int samplesPerPixel, out int min, out int max )
         {
-            //init additional return values
-            w[0] = h[0] = samplesPerPixel[0] = min[0] = max[0] = 0;
             //open the input image data file
             StreamReader sr = new StreamReader( fname );
-            String  s = readHeader( sr, w, h );
+            //get the filel type (P2, P3, P5, and p6) so we can call the specific reader.
+            // note that the w & h will be reread by the specific reader.
+            String  s = readHeader( sr, out w, out h );
             sr.Close();
-            sr = null;
 
             //the first thing should be the file type (P2, P3, P5, or P6)
             if (s.Equals( "P2" )) {
-                samplesPerPixel[ 0 ] = 1;
-                return read_ascii_pgm_file( fname, w, h, min, max );
+                samplesPerPixel = 1;
+                return read_ascii_pgm_file( fname, out w, out h, out min, out max );
             }
             else if (s.Equals( "P3" )) {
-                samplesPerPixel[ 0 ] = 3;
-                return read_ascii_ppm_file( fname, w, h, min, max );
+                samplesPerPixel = 3;
+                return read_ascii_ppm_file( fname, out w, out h, out min, out max );
             }
             else if (s.Equals( "P5" )) {
-                samplesPerPixel[ 0 ] = 1;
-                return read_binary_pgm_file( fname, w, h, min, max );
+                samplesPerPixel = 1;
+                return read_binary_pgm_file( fname, out w, out h, out min, out max );
             }
             else if (s.Equals( "P6" )) {
-                samplesPerPixel[ 0 ] = 3;
-                return read_binary_ppm_file( fname, w, h, min, max );
+                samplesPerPixel = 3;
+                return read_binary_ppm_file( fname, out w, out h, out min, out max );
             }
 
             //create a test image (note factor of 3 below for rgb)
             /*
-            samplesPerPixel[ 0 ] = 3;
-            w[ 0 ] = h[ 0 ] = 256;
-            int[] data = new int[ w[ 0 ] * h[ 0 ] * 3 ];
+            samplesPerPixel = 3;
+            min = 0;
+            max = 255;
+            w = h = 256;
+            int[] data = new int[ w*h*3 ];
             int i = 0;
             for (int r = 0; r < 256; r++) {
                 for (int c = 0; c < 256; c++) {
@@ -100,6 +99,9 @@ namespace CSImageViewer {
             }
             return data;
             */
+
+            //should never get here (but just in case)
+            w = h = samplesPerPixel = min = max = 0;
             return null;
         }
         //----------------------------------------------------------------
@@ -114,28 +116,27 @@ namespace CSImageViewer {
          *  </pre>
          *
          *  \param  fname  input image file name
-         *  \param  w      w[0] will be set to image width
-         *  \param  h      h[0] will be set to image height
-         *  \param  min    min[0] will be set to min value in image
-         *  \param  max    min[0] will be set to min value in image
+         *  \param  w      will be set to the image width
+         *  \param  h      will be set to the image height
+         *  \param  min    will be set to min value in image
+         *  \param  max    will be set to min value in image
          *
-         *  \returns  array of pixel values (gray)
-         *  as well as w[0], h[0], min[0], and max[0] will be set
+         *  \returns  array of pixel values (gray) as well as 
+         *  w, h, min, and max will be set
          */
-        protected static int[] read_ascii_pgm_file ( String fname, int[] w, int[] h, int[] min, int[] max )
+        protected static int[] read_ascii_pgm_file ( String fname, out int w, out int h, out int min, out int max )
         {
             StreamReader  sr = new StreamReader( fname );
-            String  s = readHeader( sr, w, h );
+            String  s = readHeader( sr, out w, out h );
             //the file type should be P2
             Debug.Assert( s.Equals( "P2" ) );
             if (!s.Equals( "P2" )) {
                 sr.Close();
-                sr = null;
+                min = max = 0;
                 return null;
             }
-            int[]  data = read_ascii_ints( sr, w[0]*h[0], max, min );
+            int[]  data = read_ascii_ints( sr, w*h, out max, out min );
             sr.Close();
-            sr = null;
             return data;
         }
         //----------------------------------------------------------------
@@ -153,28 +154,27 @@ namespace CSImageViewer {
          *  </pre>
          *
          *  \param  fname  input image file name
-         *  \param  w      w[0] will be set to image width
-         *  \param  h      h[0] will be set to image height
-         *  \param  min    min[0] will be set to min value in image
-         *  \param  max    min[0] will be set to min value in image
+         *  \param  w      will be set to the image width
+         *  \param  h      will be set to the image height
+         *  \param  min    will be set to min value in image
+         *  \param  max    will be set to min value in image
          *
-         *  \returns  array of pixel values (color)
-         *  as well as w[0], h[0], min[0], and max[0] will be set
+         *  \returns  array of pixel values (color) as well as 
+         *  w, h, min, and max will be set
          */
-        protected static int[] read_ascii_ppm_file ( String fname, int[] w, int[] h, int[] min, int[] max )
+        protected static int[] read_ascii_ppm_file ( String fname, out int w, out int h, out int min, out int max )
         {
             StreamReader  sr = new StreamReader( fname );
-            String  s = readHeader( sr, w, h );
+            String  s = readHeader( sr, out w, out h );
             //the file type should be P3
             Debug.Assert( s.Equals( "P3" ) );
             if (!s.Equals( "P3" )) {
                 sr.Close();
-                sr = null;
+                min = max = 0;
                 return null;
             }
-            int[]  data = read_ascii_ints( sr, w[0]*h[0]*3, max, min );
+            int[]  data = read_ascii_ints( sr, w*h*3, out max, out min );
             sr.Close();
-            sr = null;
             return data;
         }
         //----------------------------------------------------------------
@@ -190,28 +190,27 @@ namespace CSImageViewer {
          *  One 8-bit byte per binary value.
          * 
          *  \param  fname  input image file name
-         *  \param  w      w[0] will be set to image width
-         *  \param  h      h[0] will be set to image height
-         *  \param  min    min[0] will be set to min value in image
-         *  \param  max    min[0] will be set to min value in image
+         *  \param  w      will be set to the image width
+         *  \param  h      will be set to the image height
+         *  \param  min    will be set to min value in image
+         *  \param  max    will be set to min value in image
          *
-         *  \returns  array of pixel values (gray)
-         *  as well as w[0], h[0], min[0], and max[0] will be set
+         *  \returns  array of pixel values (gray) as well as 
+         *  w, h, min, and max will be set
          */
-        protected static int[] read_binary_pgm_file ( String fname, int[] w, int[] h, int[] min, int[] max )
+        protected static int[] read_binary_pgm_file ( String fname, out int w, out int h, out int min, out int max )
         {
             StreamReader  sr = new StreamReader( fname );
-            String  s = readHeader( sr, w, h );
+            String  s = readHeader( sr, out w, out h );
             //the file type should be P5
             Debug.Assert( s.Equals( "P5" ) );
             if (!s.Equals( "P5" )) {
                 sr.Close();
-                sr = null;
+                min = max = 0;
                 return null;
             }
             sr.Close();
-            sr = null;
-            int[]  data = read_binary_int8s( fname, w[0]*h[0], max, min );
+            int[]  data = read_binary_int8s( fname, w*h, out max, out min );
             return data;
         }
         //----------------------------------------------------------------
@@ -231,28 +230,27 @@ namespace CSImageViewer {
          *  One 8-bit byte per binary value (3 bytes for each RGB value).
          *
          *  \param  fname  input image file name
-         *  \param  w      w[0] will be set to image width
-         *  \param  h      h[0] will be set to image height
-         *  \param  min    min[0] will be set to min value in image
-         *  \param  max    min[0] will be set to min value in image
+         *  \param  w      will be set to the image width
+         *  \param  h      will be set to the image height
+         *  \param  min    will be set to min value in image
+         *  \param  max    will be set to min value in image
          *
-         *  \returns  array of pixel values (color)
-         *  as well as w[0], h[0], min[0], and max[0] will be set
+         *  \returns  array of pixel values (color) as well as 
+         *  w, h, min, and max will be set
          */
-        protected static int[] read_binary_ppm_file ( String fname, int[] w, int[] h, int[] min, int[] max )
+        protected static int[] read_binary_ppm_file ( String fname, out int w, out int h, out int min, out int max )
         {
             StreamReader  sr = new StreamReader( fname );
-            String  s = readHeader( sr, w, h );
+            String  s = readHeader( sr, out w, out h );
             //the file type should be P6
             Debug.Assert( s.Equals( "P6" ) );
             if (!s.Equals( "P6" )) {
                 sr.Close();
-                sr = null;
+                min = max = 0;
                 return null;
             }
             sr.Close();
-            sr = null;
-            int[]  data = read_binary_int8s( fname, w[0]*h[0]*3, max, min );
+            int[]  data = read_binary_int8s( fname, w*h*3, out max, out min );
             return data;
         }
         //----------------------------------------------------------------
@@ -260,21 +258,20 @@ namespace CSImageViewer {
          *  as a binary pgm file (<b>not implemented yet</b>).
          *
          *  \param  fname  input image file name
-         *  \param  w      w[0] will be set to image width
-         *  \param  h      h[0] will be set to image height
-         *  \param  min    min[0] will be set to min value in image
-         *  \param  max    min[0] will be set to min value in image
+         *  \param  w      will be set to image width
+         *  \param  h      will be set to image height
+         *  \param  min    will be set to min value in image
+         *  \param  max    will be set to min value in image
          *
-         *  \returns  array of pixel values (gray)
-         *  as well as w[0], h[0], min[0], and max[0] will be set
+         *  \returns  array of pixel values (gray) as well as 
+         *  w, h, min, and max will be set
          */
-        public static int[] read_binary_pgm16_file ( String fname, int[] w, int[] h, int[] min, int[] max )
+        public static int[] read_binary_pgm16_file ( String fname, out int w, out int h, out int min, out int max )
         {
             StreamReader  sr = new StreamReader( fname );
-            readHeader( sr, w, h );
+            readHeader( sr, out w, out h );
             sr.Close();
-            sr = null;
-            int[]  data = read_binary_int16s( fname, w[0]*h[0], max, min );
+            int[]  data = read_binary_int16s( fname, w*h, out max, out min );
             return data;
         }
         //----------------------------------------------------------------
@@ -282,36 +279,35 @@ namespace CSImageViewer {
          *  as a binary pgm file (<b>not implemented yet</b>).
          *
          *  \param  fname  input image file name
-         *  \param  w      w[0] will be set to image width
-         *  \param  h      h[0] will be set to image height
-         *  \param  min    min[0] will be set to min value in image
-         *  \param  max    min[0] will be set to min value in image
+         *  \param  w      will be set to image width
+         *  \param  h      will be set to image height
+         *  \param  min    will be set to min value in image
+         *  \param  max    will be set to min value in image
          *
-         *  \returns  array of pixel values (gray)
-         *  as well as w[0], h[0], min[0], and max[0] will be set
+         *  \returns  array of pixel values (gray) as well as 
+         *  w, h, min, and max will be set
          */
-        public static int[] read_binary_pgm32_file ( String fname, int[] w, int[] h, int[] min, int[] max )
+        public static int[] read_binary_pgm32_file ( String fname, out int w, out int h, out int min, out int max )
         {
             StreamReader  sr = new StreamReader( fname );
-            readHeader( sr, w, h );
+            readHeader( sr, out w, out h );
             sr.Close();
-            sr = null;
-            int[]  data = read_binary_int32s( fname, w[ 0 ] * h[ 0 ], max, min );
+            int[]  data = read_binary_int32s( fname, w*h, out max, out min );
             return data;
         }
         //----------------------------------------------------------------
         /** \brief    Read image file header.
          * 
-         *  \param    sr  input image stream
-         *  \param    w   w[0] will be set to image width
-         *  \param    h   h[0] will be set to image height
+         *  \param    sr  is the input image stream
+         *  \param    w   will be set to image width
+         *  \param    h   will be set to image height
          * 
-         *  \returns  string indicating image file type
-         *  as well as w[0] and h[0] will be set
+         *  \returns  string indicating image file type as well as 
+         *  w and h will be set
          */
-        protected static String readHeader ( StreamReader sr, int[] w, int[] h )
+        protected static String readHeader ( StreamReader sr, out int w, out int h )
         {
-            w[0] = h[0] = 0;
+            w = h = 0;
 
             //skip comments (if any)
             String  s = "#";
@@ -323,7 +319,6 @@ namespace CSImageViewer {
             Debug.Assert( s.Equals("P2") || s.Equals("P3") || s.Equals("P5") || s.Equals("P6") );
             if (!s.Equals("P2") && !s.Equals("P3") && !s.Equals("P5") && !s.Equals("P6")) {
                 sr.Close();
-                sr = null;
                 return null;
             }
             String fileType = s;
@@ -335,8 +330,8 @@ namespace CSImageViewer {
             }
 
             String[] wh = s.Split();
-            w[ 0 ] = Int32.Parse( wh[ 0 ] );
-            h[ 0 ] = Int32.Parse( wh[ 1 ] );
+            w = Int32.Parse( wh[ 0 ] );
+            h = Int32.Parse( wh[ 1 ] );
 
             //skip comments (if any)
             s = "#";
@@ -351,19 +346,19 @@ namespace CSImageViewer {
         /** \brief  This function reads binary 8-bit integer values from a
          *  file.
          * 
-         *  \param  fname    input image file name
-         *  \param  howMany  the number of values to read
-         *  \param  min      min[0] will be set to min value in image
-         *  \param  max      min[0] will be set to min value in image
+         *  \param  fname    is the input image file name
+         *  \param  howMany  is the number of values (not bytes) to read
+         *  \param  min      will be set to min value in image
+         *  \param  max      will be set to min value in image
          *
-         *  \returns  array of pixel values
-         *  as well as min[0] and max[0] will be set
+         *  \returns  array of pixel values as well as 
+         *  min and max will be set
          */
-        protected static int[] read_binary_int8s ( String fname, int howMany, int[] max, int[] min )
+        protected static int[] read_binary_int8s ( String fname, int howMany, out int max, out int min )
         {
             int[]  data = new int[ howMany ];
-            min[0] = Int32.MaxValue;
-            max[0] = Int32.MinValue;
+            min = Int32.MaxValue;
+            max = Int32.MinValue;
             BinaryReader br = new BinaryReader( File.Open( fname, FileMode.Open ) );
             //calculate the size of the header so that we can skip it
             long  len  = br.BaseStream.Length;
@@ -376,8 +371,8 @@ namespace CSImageViewer {
             //read the binary data
             for (int i=0; i<howMany; i++) {
                 int  value = br.ReadByte();
-                if (value < min[0])    min[0] = value;
-                if (value > max[0])    max[0] = value;
+                if (value < min)    min = value;
+                if (value > max)    max = value;
                 data[i] = value;
             }
             return data;
@@ -386,19 +381,19 @@ namespace CSImageViewer {
         /** \brief  This function reads binary 16-bit integer values from a
          *  file.
          * 
-         *  \param  fname    input image file name
-         *  \param  howMany  the number of values to read
-         *  \param  min      min[0] will be set to min value in image
-         *  \param  max      min[0] will be set to min value in image
+         *  \param  fname    is the input image file name
+         *  \param  howMany  is the the number of values (not bytes) to read
+         *  \param  min      will be set to min value in image
+         *  \param  max      will be set to min value in image
          *
-         *  \returns  array of pixel values
-         *  as well as min[0] and max[0] will be set
+         *  \returns  array of pixel values as well as 
+         *  min and max will be set
          */
-        protected static int[] read_binary_int16s ( String fname, int howMany, int[] max, int[] min )
+        protected static int[] read_binary_int16s ( String fname, int howMany, out int max, out int min )
         {
             int[]  data = new int[ howMany ];
-            min[ 0 ] = Int32.MaxValue;
-            max[ 0 ] = Int32.MinValue;
+            min = Int32.MaxValue;
+            max = Int32.MinValue;
             BinaryReader  br = new BinaryReader( File.Open( fname, FileMode.Open ) );
             //calculate the size of the header so that we can skip it
             long  len  = br.BaseStream.Length;
@@ -411,8 +406,8 @@ namespace CSImageViewer {
             //read the binary data
             for (int i = 0; i < howMany; i++) {
                 int value = br.ReadInt16();
-                if (value < min[ 0 ])    min[ 0 ] = value;
-                if (value > max[ 0 ])    max[ 0 ] = value;
+                if (value < min)    min = value;
+                if (value > max)    max = value;
                 data[ i ] = value;
             }
             return data;
@@ -421,18 +416,18 @@ namespace CSImageViewer {
         /** \brief  This function reads binary 32-bit integer values from a
          *  file.
          * 
-         *  \param  fname    input image file name
-         *  \param  howMany  the number of values to read
-         *  \param  min      min[0] will be set to min value in image
-         *  \param  max      min[0] will be set to min value in image
+         *  \param  fname    is the input image file name
+         *  \param  howMany  is the number of values (not bytes) to read
+         *  \param  min      will be set to min value in image
+         *  \param  max      will be set to min value in image
          *
-         *  \returns  array of pixel values
-         *  as well as min[0] and max[0] will be set
+         *  \returns  array of pixel values as well as 
+         *  min and max will be set
          */
-        protected static int[] read_binary_int32s ( String fname, int howMany, int[] max, int[] min ) {
+        protected static int[] read_binary_int32s ( String fname, int howMany, out int max, out int min ) {
             int[]  data = new int[ howMany ];
-            min[ 0 ] = Int32.MaxValue;
-            max[ 0 ] = Int32.MinValue;
+            min = Int32.MaxValue;
+            max = Int32.MinValue;
             BinaryReader  br = new BinaryReader( File.Open( fname, FileMode.Open ) );
             //calculate the size of the header so that we can skip it
             long  len  = br.BaseStream.Length;
@@ -445,8 +440,8 @@ namespace CSImageViewer {
             //read the binary data
             for (int i = 0; i < howMany; i++) {
                 int  value = br.ReadInt32();
-                if (value < min[ 0 ])    min[ 0 ] = value;
-                if (value > max[ 0 ])    max[ 0 ] = value;
+                if (value < min)    min = value;
+                if (value > max)    max = value;
                 data[ i ] = value;
             }
             return data;
@@ -455,25 +450,25 @@ namespace CSImageViewer {
         /** \brief  This function reads ascii integer (8-bits or more)
          *  values from a file.
          * 
-         *  \param  sr       input image file stream
-         *  \param  howMany  the number of values to read
-         *  \param  min      min[0] will be set to min value in image
-         *  \param  max      min[0] will be set to min value in image
+         *  \param  sr       is the input image file stream
+         *  \param  howMany  is the number of values (not bytes) to read
+         *  \param  min      will be set to min value in image
+         *  \param  max      will be set to min value in image
          *
-         *  \returns  array of pixel values
-         *  as well as min[0] and max[0] will be set
+         *  \returns  array of pixel values as well as 
+         *  min and max will be set
          */
-        protected static int[] read_ascii_ints ( StreamReader sr, int howMany, int[] max, int[] min )
+        protected static int[] read_ascii_ints ( StreamReader sr, int howMany, out int max, out int min )
         {
             int[]  data = new int[ howMany ];
-            min[ 0 ] = Int32.MaxValue;
-            max[ 0 ] = Int32.MinValue;
+            min = Int32.MaxValue;
+            max = Int32.MinValue;
             for (int i = 0; i < howMany; i++) {
                 int  tmp;
                 char  ch;
                 String  digits = "";
                 //skip leading whitespace (non-digits) (if any)
-                for (; ; ) {
+                for ( ; ; ) {
                     if (sr.EndOfStream) break;
                     tmp = sr.Read();
                     ch = Convert.ToChar( tmp );
@@ -493,8 +488,8 @@ namespace CSImageViewer {
                 }
                 Debug.Assert( digits.Length > 0 );
                 int value = Int32.Parse( digits );
-                if (value < min[0])    min[0] = value;
-                if (value > max[0])    max[0] = value;
+                if (value < min)    min = value;
+                if (value > max)    max = value;
                 data[i] = value;
             }
             return data;
