@@ -39,6 +39,8 @@ void {\bf On\-File\-Exit} (object sender, System.Event\-Args e)
 \begin{CompactList}\small\item\em Handle file-exit by exitting the application. \item\end{CompactList}\item 
 void {\bf On\-File\-Close} (object sender, Event\-Args e)
 \begin{CompactList}\small\item\em Handle file-close by closing this window. \item\end{CompactList}\item 
+void {\bf On\-Help\-About} (object sender, Event\-Args e)
+\begin{CompactList}\small\item\em Handle help-about. \item\end{CompactList}\item 
 void {\bf On\-Drag\-Drop} (object sender, Drag\-Event\-Args e)
 \begin{CompactList}\small\item\em Handle drag-and-drop of files by creating a new {\bf CSImage\-Viewer}{\rm (p.\,\pageref{class_c_s_image_viewer_1_1_c_s_image_viewer})} window for each. \item\end{CompactList}\item 
 void {\bf On\-Drag\-Enter} (object sender, Drag\-Event\-Args e)
@@ -84,18 +86,22 @@ int {\bf m\-Mouse\-X}
 \begin{CompactList}\small\item\em mouse movement x position \item\end{CompactList}\item 
 int {\bf m\-Mouse\-Y}
 \begin{CompactList}\small\item\em mouse movement y position \item\end{CompactList}\item 
-Menu\-Item {\bf menu\-Item1}
+Menu\-Item {\bf menu\-Item\-Recent\-Files}
 \begin{CompactList}\small\item\em menu of recent files \item\end{CompactList}\item 
-Menu\-Item {\bf menu\-Item\-F1}
+Menu\-Item {\bf menu\-Item\-Recent1}
 \begin{CompactList}\small\item\em recent file 1 \item\end{CompactList}\item 
-Menu\-Item {\bf menu\-Item\-F2}
+Menu\-Item {\bf menu\-Item\-Recent2}
 \begin{CompactList}\small\item\em recent file 2 \item\end{CompactList}\item 
-Menu\-Item {\bf menu\-Item\-F3}
+Menu\-Item {\bf menu\-Item\-Recent3}
 \begin{CompactList}\small\item\em recent file 3 \item\end{CompactList}\item 
-Menu\-Item {\bf menu\-Item\-F4}
+Menu\-Item {\bf menu\-Item\-Recent4}
 \begin{CompactList}\small\item\em recent file 4 \item\end{CompactList}\item 
-Menu\-Item {\bf menu\-Item\-F5}
+Menu\-Item {\bf menu\-Item\-Recent5}
 \begin{CompactList}\small\item\em recent file 5 \item\end{CompactList}\item 
+Menu\-Item {\bf menu\-Item\-Help}
+\begin{CompactList}\small\item\em help \item\end{CompactList}\item 
+Menu\-Item {\bf menu\-Item\-About}
+\begin{CompactList}\small\item\em about \item\end{CompactList}\item 
 Font {\bf m\-My\-Font} = new Font( \char`\"{}Times New Roman\char`\"{}, 12 )
 \begin{CompactList}\small\item\em font for drawing strings \item\end{CompactList}\end{CompactItemize}
 
@@ -257,6 +263,20 @@ Handle file-saveas.
 \end{Desc}
 \begin{Desc}
 \item[Returns:]nothing (void) \end{Desc}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!OnHelpAbout@{OnHelpAbout}}
+\index{OnHelpAbout@{OnHelpAbout}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void On\-Help\-About (object {\em sender}, Event\-Args {\em e})\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_b79f98b6f80d0e13a447e3471d082862}
+
+
+Handle help-about. 
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em sender}]sender \item[{\em e}]event args \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]nothing (void) \end{Desc}
 \index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!OnMouseMoved@{OnMouseMoved}}
 \index{OnMouseMoved@{OnMouseMoved}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}void On\-Mouse\-Moved (object {\em sender}, Mouse\-Event\-Args {\em e})\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_9f3fb3c1482b02132c8435daac3daf6a}
@@ -380,47 +400,61 @@ save as menu item
 
 menubar 
 
-\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuItem1@{menuItem1}}
-\index{menuItem1@{menuItem1}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf menu\-Item1}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_3873417ea5ae90a322d28ef97fa8d931}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuItemAbout@{menuItemAbout}}
+\index{menuItemAbout@{menuItemAbout}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf menu\-Item\-About}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_d7bb664ed97d72bcd83381ca1112c2cd}
 
 
-menu of recent files 
+about 
 
-\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuItemF1@{menuItemF1}}
-\index{menuItemF1@{menuItemF1}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf menu\-Item\-F1}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_45649d46a0a62237348bce8071ad8448}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuItemHelp@{menuItemHelp}}
+\index{menuItemHelp@{menuItemHelp}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf menu\-Item\-Help}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_f745f927ab396f33a31d15943e054dc1}
+
+
+help 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuItemRecent1@{menuItemRecent1}}
+\index{menuItemRecent1@{menuItemRecent1}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf menu\-Item\-Recent1}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_4d41c5e3e3826a117a922c804077acb2}
 
 
 recent file 1 
 
-\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuItemF2@{menuItemF2}}
-\index{menuItemF2@{menuItemF2}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf menu\-Item\-F2}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_26ee56599e578bb0a6467e4db8812a0e}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuItemRecent2@{menuItemRecent2}}
+\index{menuItemRecent2@{menuItemRecent2}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf menu\-Item\-Recent2}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_dc30dae205797d07834d7a9176f377db}
 
 
 recent file 2 
 
-\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuItemF3@{menuItemF3}}
-\index{menuItemF3@{menuItemF3}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf menu\-Item\-F3}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_53a70ca95fa0970a1f7da8c0ec9cb69e}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuItemRecent3@{menuItemRecent3}}
+\index{menuItemRecent3@{menuItemRecent3}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf menu\-Item\-Recent3}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_4701fe47b566b097b35c4a849fdc4d67}
 
 
 recent file 3 
 
-\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuItemF4@{menuItemF4}}
-\index{menuItemF4@{menuItemF4}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf menu\-Item\-F4}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_28d1a3868757eece95b627add3f08180}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuItemRecent4@{menuItemRecent4}}
+\index{menuItemRecent4@{menuItemRecent4}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf menu\-Item\-Recent4}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_e3fad8564a8fbae4e466e7e0d79f7c80}
 
 
 recent file 4 
 
-\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuItemF5@{menuItemF5}}
-\index{menuItemF5@{menuItemF5}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf menu\-Item\-F5}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_661d21ebd7d622f23c341a2139efd074}
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuItemRecent5@{menuItemRecent5}}
+\index{menuItemRecent5@{menuItemRecent5}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf menu\-Item\-Recent5}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_d237d229baf813838eb5a4742ef4a7fa}
 
 
 recent file 5 
+
+\index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuItemRecentFiles@{menuItemRecentFiles}}
+\index{menuItemRecentFiles@{menuItemRecentFiles}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Menu\-Item {\bf menu\-Item\-Recent\-Files}\hspace{0.3cm}{\tt  [private]}}\label{class_c_s_image_viewer_1_1_c_s_image_viewer_55ceddae922310658a4cb475b791ebdf}
+
+
+menu of recent files 
 
 \index{CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}!menuSeparator@{menuSeparator}}
 \index{menuSeparator@{menuSeparator}!CSImageViewer::CSImageViewer@{CSImage\-Viewer::CSImage\-Viewer}}

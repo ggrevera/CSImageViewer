@@ -27,11 +27,8 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-//using System.Drawing.Imaging;
-//using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
-//using System.Data;
 //----------------------------------------------------------------------
 #pragma warning disable IDE1006
 
@@ -76,12 +73,15 @@ public class CSImageViewer : Form {
         private int  mMouseX;                  ///< mouse movement x position
         private int  mMouseY;                  ///< mouse movement y position
 
-        private MenuItem menuItem1;   ///< menu of recent files
-        private MenuItem menuItemF1;  ///< recent file 1
-        private MenuItem menuItemF2;  ///< recent file 2
-        private MenuItem menuItemF3;  ///< recent file 3
-        private MenuItem menuItemF4;  ///< recent file 4
-        private MenuItem menuItemF5;  ///< recent file 5
+        private MenuItem menuItemRecentFiles;  ///< menu of recent files
+        private MenuItem menuItemRecent1;      ///< recent file 1
+        private MenuItem menuItemRecent2;      ///< recent file 2
+        private MenuItem menuItemRecent3;      ///< recent file 3
+        private MenuItem menuItemRecent4;      ///< recent file 4
+        private MenuItem menuItemRecent5;      ///< recent file 5
+
+        private MenuItem menuItemHelp;         ///< help
+        private MenuItem menuItemAbout;        ///< about
 
         private Font mMyFont = new Font( "Times New Roman", 12 );  ///< font for drawing strings
         //--------------------------------------------------------------
@@ -142,19 +142,22 @@ public class CSImageViewer : Form {
             this.FileSaveAs = new System.Windows.Forms.MenuItem();
             this.menuSeparator = new System.Windows.Forms.MenuItem();
             this.FileClose = new System.Windows.Forms.MenuItem();
-            this.menuItem1 = new System.Windows.Forms.MenuItem();
-            this.menuItemF1 = new System.Windows.Forms.MenuItem();
-            this.menuItemF2 = new System.Windows.Forms.MenuItem();
-            this.menuItemF3 = new System.Windows.Forms.MenuItem();
-            this.menuItemF4 = new System.Windows.Forms.MenuItem();
-            this.menuItemF5 = new System.Windows.Forms.MenuItem();
+            this.menuItemRecentFiles = new System.Windows.Forms.MenuItem();
+            this.menuItemRecent1 = new System.Windows.Forms.MenuItem();
+            this.menuItemRecent2 = new System.Windows.Forms.MenuItem();
+            this.menuItemRecent3 = new System.Windows.Forms.MenuItem();
+            this.menuItemRecent4 = new System.Windows.Forms.MenuItem();
+            this.menuItemRecent5 = new System.Windows.Forms.MenuItem();
             this.FileExit = new System.Windows.Forms.MenuItem();
+            this.menuItemHelp = new System.Windows.Forms.MenuItem();
+            this.menuItemAbout = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu1
             // 
             this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.FileMenuItem});
+            this.FileMenuItem,
+            this.menuItemHelp});
             // 
             // FileMenuItem
             // 
@@ -165,7 +168,7 @@ public class CSImageViewer : Form {
             this.FileSaveAs,
             this.menuSeparator,
             this.FileClose,
-            this.menuItem1,
+            this.menuItemRecentFiles,
             this.FileExit});
             this.FileMenuItem.Text = "File";
             // 
@@ -201,52 +204,65 @@ public class CSImageViewer : Form {
             this.FileClose.Text = "Close";
             this.FileClose.Click += new System.EventHandler(this.OnFileClose);
             // 
-            // menuItem1
+            // menuItemRecentFiles
             // 
-            this.menuItem1.Index = 5;
-            this.menuItem1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItemF1,
-            this.menuItemF2,
-            this.menuItemF3,
-            this.menuItemF4,
-            this.menuItemF5});
-            this.menuItem1.Text = "Recent Files";
+            this.menuItemRecentFiles.Index = 5;
+            this.menuItemRecentFiles.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItemRecent1,
+            this.menuItemRecent2,
+            this.menuItemRecent3,
+            this.menuItemRecent4,
+            this.menuItemRecent5});
+            this.menuItemRecentFiles.Text = "Recent Files";
             // 
-            // menuItemF1
+            // menuItemRecent1
             // 
-            this.menuItemF1.Index = 0;
-            this.menuItemF1.Text = "1";
-            this.menuItemF1.Click += new System.EventHandler(this.onRecentFile);
+            this.menuItemRecent1.Index = 0;
+            this.menuItemRecent1.Text = "1";
+            this.menuItemRecent1.Click += new System.EventHandler(this.onRecentFile);
             // 
-            // menuItemF2
+            // menuItemRecent2
             // 
-            this.menuItemF2.Index = 1;
-            this.menuItemF2.Text = "2";
-            this.menuItemF2.Click += new System.EventHandler(this.onRecentFile);
+            this.menuItemRecent2.Index = 1;
+            this.menuItemRecent2.Text = "2";
+            this.menuItemRecent2.Click += new System.EventHandler(this.onRecentFile);
             // 
-            // menuItemF3
+            // menuItemRecent3
             // 
-            this.menuItemF3.Index = 2;
-            this.menuItemF3.Text = "3";
-            this.menuItemF3.Click += new System.EventHandler(this.onRecentFile);
+            this.menuItemRecent3.Index = 2;
+            this.menuItemRecent3.Text = "3";
+            this.menuItemRecent3.Click += new System.EventHandler(this.onRecentFile);
             // 
-            // menuItemF4
+            // menuItemRecent4
             // 
-            this.menuItemF4.Index = 3;
-            this.menuItemF4.Text = "4";
-            this.menuItemF4.Click += new System.EventHandler(this.onRecentFile);
+            this.menuItemRecent4.Index = 3;
+            this.menuItemRecent4.Text = "4";
+            this.menuItemRecent4.Click += new System.EventHandler(this.onRecentFile);
             // 
-            // menuItemF5
+            // menuItemRecent5
             // 
-            this.menuItemF5.Index = 4;
-            this.menuItemF5.Text = "5";
-            this.menuItemF5.Click += new System.EventHandler(this.onRecentFile);
+            this.menuItemRecent5.Index = 4;
+            this.menuItemRecent5.Text = "5";
+            this.menuItemRecent5.Click += new System.EventHandler(this.onRecentFile);
             // 
             // FileExit
             // 
             this.FileExit.Index = 6;
             this.FileExit.Text = "Exit";
             this.FileExit.Click += new System.EventHandler(this.OnFileExit);
+            // 
+            // menuItemHelp
+            // 
+            this.menuItemHelp.Index = 1;
+            this.menuItemHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItemAbout});
+            this.menuItemHelp.Text = "Help";
+            // 
+            // menuItemAbout
+            // 
+            this.menuItemAbout.Index = 0;
+            this.menuItemAbout.Text = "About CSImageViewer";
+            this.menuItemAbout.Click += new System.EventHandler(this.OnHelpAbout);
             // 
             // CSImageViewer
             // 
@@ -391,6 +407,20 @@ public class CSImageViewer : Form {
             Close();
         }
         //--------------------------------------------------------------
+        /** \brief    Handle help-about.
+         *  \param    sender  sender
+         *  \param    e  event args
+         *  \returns  nothing (void)
+         */
+        private void OnHelpAbout ( object sender, EventArgs e ) {
+            String msg = "This program brought to you by ... \n\n"
+                       + "    George J. Grevera, Ph.D. \n\n";
+            if (this.mImage != null) {
+                msg += mImage;
+            }
+            MessageBox.Show( msg );
+        }
+        //--------------------------------------------------------------
         /** \brief    Handle drag-and-drop of files by creating a new
          *            CSImageViewer window for each.
          *  \param    sender  sender
@@ -469,11 +499,11 @@ public class CSImageViewer : Form {
          * \brief set up the sub menu of most recent files.
          */
         private void loadRecent ( ) {
-            menuItemF1.Text = Properties.Settings.Default.File1;
-            menuItemF2.Text = Properties.Settings.Default.File2;
-            menuItemF3.Text = Properties.Settings.Default.File3;
-            menuItemF4.Text = Properties.Settings.Default.File4;
-            menuItemF5.Text = Properties.Settings.Default.File5;
+            menuItemRecent1.Text = Properties.Settings.Default.File1;
+            menuItemRecent2.Text = Properties.Settings.Default.File2;
+            menuItemRecent3.Text = Properties.Settings.Default.File3;
+            menuItemRecent4.Text = Properties.Settings.Default.File4;
+            menuItemRecent5.Text = Properties.Settings.Default.File5;
         }
         //--------------------------------------------------------------
         /** \brief    one of the most recent files was selected.  create a viewer for it.
