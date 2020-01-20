@@ -34,8 +34,8 @@ namespace CSImageViewer {
             char[] wavID  = br.ReadChars( 4 );  //'WAVE'
 
             Console.WriteLine( riffID );
-            Console.WriteLine( size   );
-            Console.WriteLine( wavID  );
+            Console.WriteLine( size );
+            Console.WriteLine( wavID );
 
             bool   fmtFound = false;
             ushort formatTag = 0;         //1=PCM (linear quantization);3=IEEE float; other values indicate compression
@@ -59,14 +59,14 @@ namespace CSImageViewer {
                 uint   sz = br.ReadUInt32();    //chunk size
                 if (id[ 0 ] == 'f' && id[ 1 ] == 'm' && id[ 2 ] == 't' && id[ 3 ] == ' ') {         // 'fmt ' (wave format chunk)
                     fmtFound = true;
-                    formatTag      = br.ReadUInt16();    //1=PCM (linear quantization);3=IEEE float; other values indicate compression
-                    channels       = br.ReadUInt16();    //1=mono (left only), 2=stereo (l1,r1,l2,r2,...)
-                    samplesPerSec  = br.ReadUInt32();    //sample rate
+                    formatTag = br.ReadUInt16();    //1=PCM (linear quantization);3=IEEE float; other values indicate compression
+                    channels = br.ReadUInt16();    //1=mono (left only), 2=stereo (l1,r1,l2,r2,...)
+                    samplesPerSec = br.ReadUInt32();    //sample rate
                     avgBytesPerSec = br.ReadUInt32();    //for buffer estimation
-                    blockAlign     = br.ReadUInt16();    //data block size
-                    bitsPerSample  = br.ReadUInt16();    //typically 8 or 16 (but could be 24 or 32)
+                    blockAlign = br.ReadUInt16();    //data block size
+                    bitsPerSample = br.ReadUInt16();    //typically 8 or 16 (but could be 24 or 32)
                     //sz should/may be 16, 18, or 40; handle other possible (unlikely) extra data in chunk.
-                    if ((sz-16) > 0) {
+                    if ((sz - 16) > 0) {
                         byte[] skip = br.ReadBytes( (int) sz );
                     }
                 } else if (id[ 0 ] == 'f' && id[ 1 ] == 'a' && id[ 2 ] == 'c' && id[ 3 ] == 't') {  // 'fact'
@@ -107,8 +107,8 @@ namespace CSImageViewer {
             int[] result = new int[ w * h ];
             if (bytesPerSample == 1) {
                 min = max = data[ 0 ];
-                for (int i=0; i<w*h; i++) {
-                    result[i] = data[i];
+                for (int i = 0; i < w * h; i++) {
+                    result[ i ] = data[ i ];
                     if (result[ i ] < min)
                         min = result[ i ];
                     if (result[ i ] > max)
@@ -116,8 +116,8 @@ namespace CSImageViewer {
                 }
             } else if (bytesPerSample == 2) {
                 min = max = data[ 0 ] + (data[ 1 ] << 8);
-                for (int i=0,j=0; i<w*h; i++,j+=2) {
-                    result[i] = data[j] + (data[j+1]<<8);
+                for (int i = 0, j = 0; i < w * h; i++, j += 2) {
+                    result[ i ] = data[ j ] + (data[ j + 1 ] << 8);
                     if (result[ i ] < min)
                         min = result[ i ];
                     if (result[ i ] > max)
@@ -125,7 +125,7 @@ namespace CSImageViewer {
                 }
             } else if (bytesPerSample == 3) {
                 min = max = data[ 0 ] + (data[ 1 ] << 8) + (data[ 2 ] << 16);
-                for (int i = 0, j = 0; i < w * h; i++,j += 3) {
+                for (int i = 0, j = 0; i < w * h; i++, j += 3) {
                     result[ i ] = data[ j ] + (data[ j + 1 ] << 8) + (data[ j + 2 ] << 16);
                     if (result[ i ] < min)
                         min = result[ i ];
@@ -159,9 +159,9 @@ namespace CSImageViewer {
                         float f = *fptr;
                         float fMin = f;
                         float fMax = f;
-                        for (int i=1,j=4; i < w * h; i++,j+=4) {
-                            x = data[j] + (data[j+1]<<8) + (data[j+2]<<16) + (data[j+3]<<24);
-                            fptr = (float*) &x;
+                        for (int i = 1, j = 4; i < w * h; i++, j += 4) {
+                            x = data[ j ] + (data[ j + 1 ] << 8) + (data[ j + 2 ] << 16) + (data[ j + 3 ] << 24);
+                            fptr = (float*)&x;
                             f = *fptr;
                             buff[ i ] = f;
 
@@ -187,6 +187,11 @@ namespace CSImageViewer {
             fs.Close();
 
             return result;
+        }
+        //-------------------------------------------------------------------
+        /** @todo write/save audio wav file data. */
+        public static void write ( String fname, int[] buff, int w, int h, int min, int max ) {
+
         }
 
     }
