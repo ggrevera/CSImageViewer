@@ -31,6 +31,8 @@ using System.Diagnostics;
 #pragma warning disable IDE1006
 #pragma warning disable CS0219
 
+//notes: c#.net has support to read/write tiff (see https://docs.microsoft.com/en-us/dotnet/framework/wpf/graphics-multimedia/how-to-encode-and-decode-a-tiff-image).
+
 namespace CSImageViewer {
 
     /** \brief  This class contains methods that read and write wav 
@@ -39,6 +41,8 @@ namespace CSImageViewer {
     class wavHelper {
 
         /**
+         * for simplicity (as read and written from/to wav files), sample[i][0] is the left channel, sample[i][1] is the right channel, ...
+         * so audio data will typically be displayed as a very long and very thin image.
          * based on https://gist.github.com/yomakkkk/2290864
          * and http://soundfile.sapp.org/doc/WaveFormat/
          * and http://www.lightlink.com/tjweber/StripWav/WAVE.html
@@ -76,7 +80,7 @@ namespace CSImageViewer {
 
             bool   dataFound = false;
             uint   dataSize = 0;          //size of data in bytes
-            byte[] data = null;
+            byte[] data = null;           //unsigned
 
             bool   infoFound = false, unknownFound = false, peakFound = false, listFound = false, id3Found = false;
 
@@ -128,10 +132,14 @@ namespace CSImageViewer {
             Debug.Assert( 1 <= bytesPerSample && bytesPerSample <= 4 );
             h = (int)(dataSize / bytesPerSample / channels);
 
-            /** @todo: george - needs work. 8-bit ints unsigned? 16, 24, 32-bit ints signed? 32-bit floats? */
-            /** @todo: george - need to determine min and max */
+            /** @todo: george - needs work.
+             * according to http://soundfile.sapp.org/doc/WaveFormat/, 8-bit ints are unsigned;
+             * 16-bit ints are signed; no mention of 24- and 32-bit ints so i'm assuming that they are signed.
+             * above needs to be tested.
+             * 32-bit float support still needs work (to convert to ints).
+             */
             int[] result = new int[ w * h ];
-            if (bytesPerSample == 1) {
+            if (bytesPerSample == 1) {  //8-bits unsigned
                 min = max = data[ 0 ];
                 for (int i = 0; i < w * h; i++) {
                     result[ i ] = data[ i ];
@@ -140,53 +148,55 @@ namespace CSImageViewer {
                     if (result[ i ] > max)
                         max = result[ i ];
                 }
-            } else if (bytesPerSample == 2) {
-                min = max = data[ 0 ] + (data[ 1 ] << 8);
+            } else if (bytesPerSample == 2) {  //16-bits signed
+                min = max = data[ 0 ] | (data[ 1 ] << 8);
                 for (int i = 0, j = 0; i < w * h; i++, j += 2) {
-                    result[ i ] = data[ j ] + (data[ j + 1 ] << 8);
+                    result[ i ] = data[ j ] | (data[ j + 1 ] << 8);
                     if (result[ i ] < min)
                         min = result[ i ];
                     if (result[ i ] > max)
                         max = result[ i ];
                 }
-            } else if (bytesPerSample == 3) {
-                min = max = data[ 0 ] + (data[ 1 ] << 8) + (data[ 2 ] << 16);
+            } else if (bytesPerSample == 3) {  //24-bits signed
+                min = max = data[ 0 ] | (data[ 1 ] << 8) | (data[ 2 ] << 16);
                 for (int i = 0, j = 0; i < w * h; i++, j += 3) {
-                    result[ i ] = data[ j ] + (data[ j + 1 ] << 8) + (data[ j + 2 ] << 16);
+                    result[ i ] = data[ j ] | (data[ j + 1 ] << 8) | (data[ j + 2 ] << 16);
                     if (result[ i ] < min)
                         min = result[ i ];
                     if (result[ i ] > max)
                         max = result[ i ];
                 }
-            } else if (bytesPerSample == 4) {
-                if (formatTag == 1) {
-                    min = max = data[ 0 ] + (data[ 1 ] << 8) + (data[ 2 ] << 16) + (data[ 3 ] << 24);
+            } else if (bytesPerSample == 4) {  //32-bits (signed int or float)
+                if (formatTag == 1) {  //signed 32-bits
+                    min = max = data[ 0 ] | (data[ 1 ] << 8) | (data[ 2 ] << 16) | (data[ 3 ] << 24);
                     for (int i = 0, j = 0; i < w * h; i++, j += 4) {
-                        result[ i ] = data[ j ] + (data[ j + 1 ] << 8) + (data[ j + 2 ] << 16) + (data[ j + 3 ] << 24);
+                        result[ i ] = data[ j ] | (data[ j + 1 ] << 8) | (data[ j + 2 ] << 16) | (data[ j + 3 ] << 24);
                         if (result[ i ] < min)
                             min = result[ i ];
                         if (result[ i ] > max)
                             max = result[ i ];
                     }
-                } else if (formatTag == 3) {
-                    Debug.Assert( dataFound );
+                } else if (formatTag == 3) {  //32-bit float
+                    Debug.Assert( dataFound  );
                     Debug.Assert( fs.CanSeek );
                     /**
                      * @todo: george - need to convert floats to ints; tricky.
                      * need to load floats, determine float min and max, then scale using min and max (but of what intdata type?)
                      */
-                    float[] buff = new float[ w*h ];
+                    float[] buff = new float[ w * h ];
 
                     //a better (safe) way to do the code below would be to replace it with BitConverter.ToSingle(Byte[], Int32)
 
+                    float fMin = 0;
+                    float fMax = 0;
                     unsafe {
-                        int x = data[0] + (data[1]<<8) + (data[2]<<16) + (data[3]<<24);
+                        int x = data[0] | (data[1]<<8) | (data[2]<<16) | (data[3]<<24);
                         float* fptr = (float*) &x;
                         float f = *fptr;
-                        float fMin = f;
-                        float fMax = f;
+                        fMin = f;
+                        fMax = f;
                         for (int i = 1, j = 4; i < w * h; i++, j += 4) {
-                            x = data[ j ] + (data[ j + 1 ] << 8) + (data[ j + 2 ] << 16) + (data[ j + 3 ] << 24);
+                            x = data[ j ] | (data[ j + 1 ] << 8) | (data[ j + 2 ] << 16) | (data[ j + 3 ] << 24);
                             fptr = (float*)&x;
                             f = *fptr;
                             buff[ i ] = f;
@@ -196,11 +206,11 @@ namespace CSImageViewer {
                             if (f > fMax)
                                 fMax = f;
                         }
-                        //now scale
-                        //should be -1.0 <= fMin <= fMax <= +1.0
-                        Console.WriteLine( fMin );
-                        Console.WriteLine( fMax );
                     }
+                    //now scale. should be -1.0 <= fMin <= fMax <= +1.0
+                    Console.WriteLine( fMin );
+                    Console.WriteLine( fMax );
+                    //here's the big question. should [-1 .. +1] be scaled to what?
                     Debug.Assert( false );
                 } else {
                     Debug.Assert( false );
@@ -215,7 +225,7 @@ namespace CSImageViewer {
             return result;
         }
         //-------------------------------------------------------------------
-        /** @todo write/save audio wav file data. */
+        /** @todo george: write/save audio wav file data. */
         public static void write ( String fname, int[] buff, int w, int h, int min, int max ) {
 
         }
