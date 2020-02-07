@@ -50,23 +50,24 @@ namespace CSImageViewer {
          */
         public GrayImageData ( int[] unpacked, int w, int h ) {
             Debug.Assert( unpacked != null );
+            Debug.Assert( unpacked.Length == w*h );
 
-            Bitmap  bm = new Bitmap( w, h, PixelFormat.Format24bppRgb );
-            mDisplayImage = bm;
+            mDisplayImage = new Bitmap( w, h, PixelFormat.Format24bppRgb );
             mIsColor = false;
             mImageModified = false;
-            mW = mDisplayImage.Width;
-            mH = mDisplayImage.Height;
-            mMin = Int32.MaxValue;
-            mMax = Int32.MinValue;
+            mW = w;
+            mH = h;
             mOriginalData = new int[ mW * mH ];  // just gray data
             Debug.Assert( mOriginalData != null );
-            for (int i = 0; i < mW * mH; i++) {
+            //determine min and max, and copy unpacked into mOriginalData
+            mMin = Int32.MaxValue;
+            mMax = Int32.MinValue;
+            for (int i = 0; i < w*h; i++) {
                 mOriginalData[ i ] = unpacked[ i ];
                 if (mOriginalData[ i ] < mMin)    mMin = mOriginalData[ i ];
                 if (mOriginalData[ i ] > mMax)    mMax = mOriginalData[ i ];
             }
-            mDisplayData = null;
+//            mDisplayData = null;
             unpacked_gray_to_display( unpacked );
         }
         //----------------------------------------------------------------
@@ -174,7 +175,7 @@ namespace CSImageViewer {
                 Debug.Assert( false );  //bad bpp
             }
             oldBM.UnlockBits( bmData );
-            mDisplayData = null;
+//            mDisplayData = null;
             unpacked_gray_to_display( mOriginalData );
         }
         //----------------------------------------------------------------
@@ -194,13 +195,12 @@ namespace CSImageViewer {
          */
         public void unpacked_gray_to_display ( int[] unpacked ) {
             Debug.Assert( unpacked != null );
+            Debug.Assert( unpacked.Length == mW*mH );  // gray
             Debug.Assert( !mIsColor );
-            int  length = mW * mH;
-            Debug.Assert( unpacked.Length == length );  // gray
 
-            //mDisplayData will simply be a copy of unpacked.
-            // mOriginalData will not be modified.
-            if (mDisplayData == null)    mDisplayData = new int[ length ];  // gray
+            //mOriginalData will not be modified.
+            // mDisplayData will simply be a copy of unpacked.
+            if (mDisplayData == null)    mDisplayData = new int[ mW*mH ];  // gray
             Debug.Assert( mDisplayData != null );
 
             BitmapData  bmData = mDisplayImage.LockBits( new Rectangle( 0, 0, mDisplayImage.Width, mDisplayImage.Height ),
