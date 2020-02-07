@@ -35,11 +35,11 @@ using System.Windows.Forms;
 /** \brief read, represent, process, save, and display image data. */
 namespace CSImageViewer {
 
-/** \brief Instantiate this class to display an image.
- *  v4.1 adds support for drag-and-drop of input files.
- *  \version 4.2 fixes scrolling issues.
- */
-public class CSImageViewer : Form {
+    /** \brief Instantiate this class to display an image.
+     *  v4.1 adds support for drag-and-drop of input files.
+     *  \version 4.2 fixes scrolling issues.
+     */
+    public class CSImageViewer : Form {
 
         /** \brief  input file name filter string for image files */
         private const String sFilter
@@ -308,10 +308,10 @@ public class CSImageViewer : Form {
             if (mImage != null) {
                 if (this.AutoScroll)
                     g.DrawImage( mImage.mDisplayImage,
-                                 new Rectangle(AutoScrollPosition.X, AutoScrollPosition.Y, (int)(mImage.mDisplayImage.Width * Zoom), (int)(mImage.mDisplayImage.Height * Zoom)) );
+                                 new Rectangle(AutoScrollPosition.X, AutoScrollPosition.Y, (int)(mImage.mDisplayImage.Width * Zoom + 0.5), (int)(mImage.mDisplayImage.Height * Zoom + 0.5)) );
                 else
                     g.DrawImage( mImage.mDisplayImage,
-                                 new Rectangle(0, 0, (int)(mImage.mDisplayImage.Width * Zoom), (int)(mImage.mDisplayImage.Height * Zoom)) );
+                                 new Rectangle(0, 0, (int)(mImage.mDisplayImage.Width * Zoom + 0.5), (int)(mImage.mDisplayImage.Height * Zoom + 0.5)) );
             } else
                 g.Clear( Color.DarkGray );
 
@@ -539,3 +539,4 @@ public class CSImageViewer : Form {
     }
 }
 //----------------------------------------------------------------------
+

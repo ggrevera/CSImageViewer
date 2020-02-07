@@ -48,9 +48,9 @@ namespace CSImageViewer {
          * and http://www.lightlink.com/tjweber/StripWav/WAVE.html
          * and http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/WAVE.html
          */
-        public static int[] read ( String fname, out int w, out int h, out int min, out int max ) {
+        public static int[] read ( String fname, out int w, out int h, out int min, out int max, out int sampleRate ) {
             //init additional return values
-            w = h = min = max = 0;
+            w = h = min = max = sampleRate = 0;
 
             //open the input data file
             FileStream   fs = new FileStream( fname, FileMode.Open, FileAccess.Read );
@@ -92,6 +92,7 @@ namespace CSImageViewer {
                     formatTag = br.ReadUInt16();    //1=PCM (linear quantization);3=IEEE float; other values indicate compression
                     channels = br.ReadUInt16();    //1=mono (left only), 2=stereo (l1,r1,l2,r2,...)
                     samplesPerSec = br.ReadUInt32();    //sample rate
+                    sampleRate = (int)samplesPerSec;
                     avgBytesPerSec = br.ReadUInt32();    //for buffer estimation
                     blockAlign = br.ReadUInt16();    //data block size
                     bitsPerSample = br.ReadUInt16();    //typically 8 or 16 (but could be 24 or 32)
@@ -226,8 +227,40 @@ namespace CSImageViewer {
         }
         //-------------------------------------------------------------------
         /** @todo george: write/save audio wav file data. */
-        public static void write ( String fname, int[] buff, int w, int h, int min, int max ) {
+        public static void write ( String fname, int[] buff, int w, int h, int sampleRate ) {
+            Debug.Assert( w*h > 0 );
+            //determine min & max
+            int min = buff[ 0 ];
+            int max = buff[ 0 ];
+            for (int i=1; i<w*h; i++) {
+                if (buff[ i ] < min)
+                    min = buff[ i ];
+                if (buff[ i ] > max)
+                    max = buff[ i ];
+            }
 
+            //how many bits do we need?
+            if (min >= 0) {  //unsigned?
+                if (max <= 255) {  //8 bits?
+
+                } else if (max <= UInt16.MaxValue) {  //16 bits?
+
+                } else {  //32 bits
+
+                }
+            } else {  //signed
+                if (-128 <= min && max <= 127) {  //8 bits?
+
+                } else if (Int16.MinValue <= min && max <= Int16.MaxValue) {  //16 bits?
+
+                } else {  //32 bits
+
+                }
+            }
+
+            //we need at least a RIFF header, an 'fmt ' chunk, and a 'data' chunk.
+
+            Debug.Assert( false );
         }
 
     }

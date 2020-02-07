@@ -45,7 +45,13 @@ namespace CSImageViewer {
 #else
             Console.WriteLine("This is the release version.");
 #endif
-            Application.Run( new CSImageViewer() );
+            if (args == null || args.Length < 1) {
+                Application.Run( new CSImageViewer() );
+            } else {
+                for (int i=0; i<args.Length; i++) {
+                    Application.Run( new CSImageViewer(args[i]) );
+                }
+            }
         }
     }
 

@@ -75,7 +75,7 @@ namespace CSImageViewer {
          *  gray values), this ctor reads the image data, uses the lookup
          *  table to store the pixel data in an array, and creates a
          *  displayable version of the image.  mOriginalData will be
-         *  allocated and set  to the pixel values in the bitmap.
+         *  allocated and set to the pixel values in the bitmap.
          *
          *  \param    oldBM  bitmap image used to construct an instance of this class
          *  \param    oldPalette  color lookup table

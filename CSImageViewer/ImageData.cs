@@ -49,6 +49,7 @@ namespace CSImageViewer {
         protected int     mMin;            ///< overall min image pixel value
         protected int     mMax;            ///< overall max image pixel value
         protected String  mFname;          ///< (optional) file name
+        protected int     mRate;           ///< samples per sec (audio only)
 
         /** \brief  Actual original (unmodified) unpacked (1 component per
          *          array entry) image data.
@@ -99,6 +100,8 @@ namespace CSImageViewer {
                 t.print();
                 if (max > 255)
                     MessageBox.Show( "Warning:\n\nMax value of " + max + " exceeds limit of 255." );
+                if (min < 0)
+                    MessageBox.Show( "Warning:\n\nMin value of " + min + " is less than 0." );
                 if (spp == 3) {
                     id = new ColorImageData( originalData, w, h );
                     id.mFname = fileName;
@@ -117,13 +120,17 @@ namespace CSImageViewer {
 
             if (up.EndsWith( ".WAV" )) {
                 //basically treat audio wave files like 2d gray files (which are probably wide but not very high)
-                //technique (trick? kludge?) to implement pass-by-reference
-                int w, h, min, max;
-                int[] originalData = wavHelper.read( fileName, out w, out h, out min, out max );
+                int w, h, min, max, sampleRate;
+                int[] originalData = wavHelper.read( fileName, out w, out h, out min, out max, out sampleRate );
                 t.print();
+                if (max > 255)
+                    MessageBox.Show( "Warning:\n\nMax value of " + max + " exceeds limit of 255." );
+                if (min < 0)
+                    MessageBox.Show( "Warning:\n\nMin value of " + min + " is less than 0." );
                 id = new GrayImageData( originalData, w, h );
                 id.mFname   = fileName;
                 id.mIsAudio = true;
+                id.mRate    = sampleRate;
                 Console.WriteLine( id );
                 return id;
             }
@@ -230,17 +237,20 @@ namespace CSImageViewer {
             String up = fname.ToLower();
             if (up.EndsWith( ".binary.pnm" ) || up.EndsWith( ".binary.ppm" ) || up.EndsWith( ".binary.pgm" )) {
                 if (mDisplayData != null)
-                    pnmHelper.write_binary_pgm_or_ppm_data8( fname, mDisplayData,  mW, mH, mIsColor ? 3 : 1 );
+                    pnmHelper.write_binary_pgm_or_ppm_data8( fname, mDisplayData, mW, mH, mIsColor ? 3 : 1 );
                 else
                     pnmHelper.write_binary_pgm_or_ppm_data8( fname, mOriginalData, mW, mH, mIsColor ? 3 : 1 );
-            }
-            else if (up.EndsWith( ".pnm" ) || up.EndsWith( ".ppm" ) || up.EndsWith( ".pgm" )) {
+            } else if (up.EndsWith( ".pnm" ) || up.EndsWith( ".ppm" ) || up.EndsWith( ".pgm" )) {
                 if (mDisplayData != null)
-                    pnmHelper.write_pgm_or_ppm_ascii_data( fname, mDisplayData,  mW, mH, mIsColor ? 3 : 1 );
+                    pnmHelper.write_pgm_or_ppm_ascii_data( fname, mDisplayData, mW, mH, mIsColor ? 3 : 1 );
                 else
                     pnmHelper.write_pgm_or_ppm_ascii_data( fname, mOriginalData, mW, mH, mIsColor ? 3 : 1 );
-            }
-            else {
+            } else if (up.EndsWith( ".wav" ) || up.EndsWith( ".wave" )) {
+                if (mDisplayData != null)
+                    wavHelper.write( fname, mDisplayData, mW, mH, mRate );
+                else
+                    wavHelper.write( fname, mOriginalData, mW, mH, mRate );
+            } else {
                 mDisplayImage.Save( fname );
             }
         }
@@ -281,8 +291,12 @@ namespace CSImageViewer {
             return mOriginalData[ i ];
         }
         /** \brief accessor returning input image file name (if any). */
-        public String getFname (  ) {
+        public String getFname ( ) {
             return mFname;
+        }
+        /** \brief accessor returning audio sample rate (audio only). */
+        public int getRate ( ) {
+            return mRate;
         }
 
     }
