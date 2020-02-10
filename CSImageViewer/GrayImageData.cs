@@ -180,17 +180,17 @@ namespace CSImageViewer {
         }
         //----------------------------------------------------------------
         /** \brief  This function takes an unpacked int array of gray pixel
-         *  values (representing an entire image), and copies the values 
-         *  to mDisplayData (also representing an entire image).
+         *  values (representing an entire image), and copies the values to 
+         *  mDisplayData (also representing an entire image).
          *  mDisplayImage is changed to these values as well.
-         *  mOriginalData remains unchanged.
+         *  mOriginalData and unpacked remain unchanged.
          *  Note that unpacked must be the same size as the original image 
          *  (mW*mH).
          *
          *  \param    unpacked  unpacked int array of gray values
          *            (all values must be in [0..255]
          *            - no scaling will occur in this function
-         *            - only the least significant 8 bits will be used)
+         *            - all values v will be clamped (not scaled) to 0 <= v <= 255
          *  \returns  nothing (void)
          */
         public void unpacked_gray_to_display ( int[] unpacked ) {
@@ -199,7 +199,7 @@ namespace CSImageViewer {
             Debug.Assert( !mIsColor );
 
             //mOriginalData will not be modified.
-            // mDisplayData will simply be a copy of unpacked.
+            // mDisplayData will simply be a (possibly clamped) copy of unpacked.
             if (mDisplayData == null)    mDisplayData = new int[ mW*mH ];  // gray
             Debug.Assert( mDisplayData != null );
 

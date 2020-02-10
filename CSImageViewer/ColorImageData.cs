@@ -270,15 +270,17 @@ namespace CSImageViewer {
         }
         //----------------------------------------------------------------
         /** \brief  This function takes an unpacked int array of rgb pixel
-         *  values (representing an entire image), and copies the values 
-         *  to mDisplayData (also representing an entire image).  
+         *  values (representing an entire image), and copies the values to
+         *  mDisplayData (also representing an entire image).  
          *  mDisplayImage is changed to these values as well.
-         *  mOriginalData remains unchanged.
-         *  Note that unpacked must be the same size as the original image (mW*mH).
+         *  mOriginalData and unpacked remain unchanged.
+         *  Note that unpacked must be the same size as the original image \
+         *  (mW*mH*3).
          *
-         *  \param    unpacked  unpacked int array of rgb values (all values
-         *            must be in [0..255] - no scaling will occur in this
-         *            function - on the least significant 8 bits will be used)
+         *  \param    unpacked  unpacked int array of gray values
+         *            (all values must be in [0..255]
+         *            - no scaling will occur in this function
+         *            - all values v will be clamped (not scaled) to 0 <= v <= 255
          *  \returns  nothing (void)
          */
         public void unpacked_rgb_to_display ( int[] unpacked ) {
@@ -287,8 +289,8 @@ namespace CSImageViewer {
             int  length = mW * mH;
             Debug.Assert( unpacked.Length == length*3 );  // * 3 for rgb
 
-            //mDisplayData will simply be a copy of unpacked.
-            // mOriginalData will not be modified.
+            //mOriginalData will not be modified.
+            // mDisplayData will simply be a (possibly clamped) copy of unpacked.
             if (mDisplayData==null)    mDisplayData = new int[ length*3 ];  // * 3 for rgb
             Debug.Assert( mDisplayData != null );
 
