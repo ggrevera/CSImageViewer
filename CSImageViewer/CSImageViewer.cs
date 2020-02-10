@@ -317,6 +317,9 @@ namespace CSImageViewer {
                 g.Clear( Color.DarkGray );
 
             if (mMouseMoveValid) {
+                //we must add offset when scrolled.
+                mMouseX += HorizontalScroll.Value;
+                mMouseY += VerticalScroll.Value;
                 //report position
                 LinearGradientBrush  myBrush = new LinearGradientBrush( ClientRectangle, Color.Black, Color.Yellow, LinearGradientMode.Horizontal );
                 g.DrawString( "(" + mMouseX + "," + mMouseY + ")", mMyFont, myBrush, 20, 40 );
@@ -530,7 +533,8 @@ namespace CSImageViewer {
             }
         }
         //--------------------------------------------------------------
-        /** \brief    scrolling.
+        /** \brief    scrolling. if we don't do this, a strange artifact
+         *            will appear when scrolling large images.
          *  \param    sender  sender
          *  \param    e  event args
          */
