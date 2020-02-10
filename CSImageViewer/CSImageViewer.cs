@@ -69,7 +69,7 @@ namespace CSImageViewer {
         private double Zoom = 1.0;        ///< zoom/scale factor
         private IContainer components;    ///< do not use directly
 
-        private bool mMouseMoveValid = false;  ///< is mouxe (x,y) below valid?
+        private bool mMouseMoveValid = false;  ///< is mouse (x,y) below valid?
         private int  mMouseX;                  ///< mouse movement x position
         private int  mMouseY;                  ///< mouse movement y position
 
@@ -83,7 +83,7 @@ namespace CSImageViewer {
         private MenuItem menuItemHelp;         ///< help
         private MenuItem menuItemAbout;        ///< about
 
-        private Font mMyFont = new Font( "Times New Roman", 12 );  ///< font for drawing strings
+        private readonly Font mMyFont = new Font( "Times New Roman", 12 );  ///< font for drawing strings
         //--------------------------------------------------------------
         /** \brief    Ctor that simply creates an empty window.
          *  \returns  nothing (ctor)
@@ -278,6 +278,7 @@ namespace CSImageViewer {
             this.Scroll += new System.Windows.Forms.ScrollEventHandler(this.OnScroll);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.OnDragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.OnDragEnter);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnKeyPress);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnMouseMoved);
             this.ResumeLayout(false);
 
@@ -336,6 +337,7 @@ namespace CSImageViewer {
             openFileDialog.Filter = sFilter;
             openFileDialog.FilterIndex = 1;
             openFileDialog.RestoreDirectory = true;
+            openFileDialog.Multiselect = true;
 
             if (DialogResult.OK == openFileDialog.ShowDialog()) {
                 if (mImage == null) {  //any image currently?
@@ -346,8 +348,10 @@ namespace CSImageViewer {
                         this.AutoScrollMinSize = new Size( (int) (mImage.mDisplayImage.Width * Zoom), (int) (mImage.mDisplayImage.Height * Zoom) );
                     Invalidate();
                 } else {
-                    CSImageViewer tmp = new CSImageViewer( openFileDialog.FileName );
-                    tmp.Show();
+                    for (int i=0; i<openFileDialog.FileNames.Length; i++) {
+                        CSImageViewer tmp = new CSImageViewer( openFileDialog.FileNames[i] );
+                        tmp.Show();
+                    }
                 }
 
                 saveRecent( openFileDialog.FileName );
@@ -534,6 +538,10 @@ namespace CSImageViewer {
             //Console.WriteLine( "OnScroll" );
             mMouseMoveValid = false;
             this.Invalidate();  //cause repaint
+        }
+        //--------------------------------------------------------------
+        private void OnKeyPress ( object sender, KeyPressEventArgs e ) {
+            Console.WriteLine( "OnKeyPress" );
         }
 
     }

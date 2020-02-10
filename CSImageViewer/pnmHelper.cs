@@ -400,11 +400,11 @@ namespace CSImageViewer {
             long  diff = len - howMany;
             Debug.Assert( diff >= 0 );
             //skip the header
-            for (int i = 0; i < diff; i++) {
+            for (int i=0; i<diff; i++) {
                 br.ReadByte();
             }
             //read the binary data
-            for (int i = 0; i < howMany; i++) {
+            for (int i=0; i<howMany; i++) {
                 int value = br.ReadInt16();
                 if (value < min)    min = value;
                 if (value > max)    max = value;
@@ -434,11 +434,11 @@ namespace CSImageViewer {
             long  diff = len - howMany;
             Debug.Assert( diff >= 0 );
             //skip the header
-            for (int i = 0; i < diff; i++) {
+            for (int i=0; i<diff; i++) {
                 br.ReadByte();
             }
             //read the binary data
-            for (int i = 0; i < howMany; i++) {
+            for (int i=0; i<howMany; i++) {
                 int  value = br.ReadInt32();
                 if (value < min)    min = value;
                 if (value > max)    max = value;
@@ -479,7 +479,7 @@ namespace CSImageViewer {
                 }
                 Debug.Assert( digits.Length > 0 );
                 //keep reading digits until we find a non-digit (or eof)
-                for (; ; ) {
+                for ( ; ; ) {
                     if (sr.EndOfStream) break;
                     tmp = sr.Read();
                     ch = Convert.ToChar( tmp );
@@ -668,7 +668,7 @@ namespace CSImageViewer {
          *  \returns  nothing (void)
          */
         private static void writeString ( BinaryWriter wr, String s ) {
-            for (int i = 0; i < s.Length; i++) {
+            for (int i=0; i<s.Length; i++) {
                 wr.Write( s[ i ] );
             }
         }
