@@ -274,13 +274,14 @@ namespace CSImageViewer {
          *  mDisplayData (also representing an entire image).  
          *  mDisplayImage is changed to these values as well.
          *  mOriginalData and unpacked remain unchanged.
-         *  Note that unpacked must be the same size as the original image \
+         *  Note that unpacked must be the same size as the original image
          *  (mW*mH*3).
          *
          *  \param    unpacked  unpacked int array of gray values
          *            (all values must be in [0..255]
          *            - no scaling will occur in this function
          *            - all values v will be clamped (not scaled) to 0 <= v <= 255
+         *            - copied to mDisplayData
          *  \returns  nothing (void)
          */
         public void unpacked_rgb_to_display ( int[] unpacked ) {

@@ -191,6 +191,7 @@ namespace CSImageViewer {
          *            (all values must be in [0..255]
          *            - no scaling will occur in this function
          *            - all values v will be clamped (not scaled) to 0 <= v <= 255
+         *            - copied to mDisplayData
          *  \returns  nothing (void)
          */
         public void unpacked_gray_to_display ( int[] unpacked ) {

@@ -222,7 +222,7 @@ namespace CSImageViewer {
             return "{ \n"
                 + "    \"mMax\": "          + mMax + ", \n"
                 + "    \"mDisplayData\": "  + "[...], \n"            //good enough for arrays
-                + "    \"mDisplayImage\": " + mDisplayImage + " \n"  //good enough other contained objects
+                + "    \"mDisplayImage\": " + mDisplayImage + " \n"  //good enough for other contained objects
                 + "}";
         }
         //----------------------------------------------------------------
