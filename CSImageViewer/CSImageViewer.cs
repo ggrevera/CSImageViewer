@@ -83,17 +83,18 @@ namespace CSImageViewer {
         private MenuItem menuItemHelp;         ///< help
         private MenuItem menuItemAbout;        ///< about
 
-        private readonly Font mMyFont = new Font( "Times New Roman", 12 );  ///< font for drawing strings
+        private readonly Font mFont = new Font( "Times New Roman", 12 );  ///< font for drawing strings
+        private LinearGradientBrush  mBrush1;  ///< brush for text overlay
+        private LinearGradientBrush  mBrush2;  ///< another brush for text overlay
         //--------------------------------------------------------------
         /** \brief    Ctor that simply creates an empty window.
          *  \returns  nothing (ctor)
          */
         public CSImageViewer ( ) {
-            InitializeComponent();
+            init();
             this.Text = "CSImageViewer: <empty>";
             this.Cursor = Cursors.Cross;
             mImage = null;
-            loadRecent();
         }
         //--------------------------------------------------------------
         /** \brief    Ctor that creates a window that displays the specified
@@ -102,16 +103,26 @@ namespace CSImageViewer {
          *  \returns  nothing (ctor)
          */
         public CSImageViewer ( String fname ) {
+            init();
             this.Cursor = Cursors.WaitCursor;
-            InitializeComponent();
             this.mImage = ImageData.load( fname );
-            this.Text = "CSImageViewer: " + fname;
+            this.Text   = "CSImageViewer: " + fname;
             this.AutoScroll = true;
             if (this.AutoScroll)
                 this.AutoScrollMinSize = new Size( (int) (mImage.mDisplayImage.Width  * Zoom),
                                                    (int) (mImage.mDisplayImage.Height * Zoom) );
             this.Invalidate();
             this.Cursor = Cursors.Cross;
+        }
+        //--------------------------------------------------------------
+        /**
+         * \brief   common ctor initialization
+         * \returns nothing (void)
+         */
+        private void init ( ) {
+            InitializeComponent();
+            mBrush1 = new LinearGradientBrush( this.ClientRectangle, Color.Black, Color.Yellow, LinearGradientMode.Horizontal );
+            mBrush2 = new LinearGradientBrush( this.ClientRectangle, Color.White, Color.Yellow, LinearGradientMode.Horizontal );
             loadRecent();
         }
         //--------------------------------------------------------------
@@ -306,7 +317,7 @@ namespace CSImageViewer {
             Graphics g = e.Graphics;
             g.InterpolationMode = InterpolationMode.NearestNeighbor;
 
-            if (mImage != null) {
+            if (mImage != null && mImage.mDisplayImage != null) {
                 if (this.AutoScroll)
                     g.DrawImage( mImage.mDisplayImage,
                                  new Rectangle(AutoScrollPosition.X, AutoScrollPosition.Y, (int)(mImage.mDisplayImage.Width * Zoom + 0.5), (int)(mImage.mDisplayImage.Height * Zoom + 0.5)) );
@@ -321,10 +332,8 @@ namespace CSImageViewer {
                 mMouseX += HorizontalScroll.Value;
                 mMouseY += VerticalScroll.Value;
                 //report position
-                LinearGradientBrush  myBrush = new LinearGradientBrush( ClientRectangle, Color.Black, Color.Yellow, LinearGradientMode.Horizontal );
-                g.DrawString( "(" + mMouseX + "," + mMouseY + ")", mMyFont, myBrush, 20, 40 );
-                myBrush = new LinearGradientBrush( ClientRectangle, Color.White, Color.Yellow, LinearGradientMode.Horizontal );
-                g.DrawString( "(" + mMouseX + "," + mMouseY + ")", mMyFont, myBrush, 21, 41 );
+                g.DrawString( "(" + mMouseX + "," + mMouseY + ")", mFont, mBrush1, 20, 40 );
+                g.DrawString( "(" + mMouseX + "," + mMouseY + ")", mFont, mBrush2, 21, 41 );
             }
         }
         //--------------------------------------------------------------
