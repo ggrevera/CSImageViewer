@@ -139,8 +139,8 @@ namespace CSImageViewer {
             if (bpp == 8) {
                 unsafe {
                     byte*  p = (byte*) Scan0;
-                    int  nOffset = stride - w;
-                    int  i = 0;
+                    int    nOffset = stride - w;
+                    int    i = 0;
                     for (int y = 0; y < mH; y++) {
                         for (int x = 0; x < mW; x++) {
                             int  v = p[ 0 ];
@@ -172,8 +172,8 @@ namespace CSImageViewer {
             else if (bpp == 4) {
                 unsafe {
                     byte* p = (byte*) Scan0;
-                    int nOffset = stride - (w+1)/2;
-                    int i = 0;
+                    int   nOffset = stride - (w+1)/2;
+                    int   i = 0;
                     for (int y = 0; y < mH; y++) {
                         for (int x = 0; x < mW; /*intentionally left blank*/) {
 
@@ -295,9 +295,10 @@ namespace CSImageViewer {
             if (mDisplayData==null)    mDisplayData = new int[ length*3 ];  // * 3 for rgb
             Debug.Assert( mDisplayData != null );
 
-            BitmapData  bmData = mDisplayImage.LockBits( new Rectangle( 0, 0, mDisplayImage.Width, mDisplayImage.Height ), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb );
+            BitmapData  bmData = mDisplayImage.LockBits( new Rectangle( 0, 0, mDisplayImage.Width, mDisplayImage.Height ),
+                                                         ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb );
             int         stride = bmData.Stride;
-            IntPtr      Scan0 = bmData.Scan0;
+            IntPtr      Scan0  = bmData.Scan0;
             unsafe {
                 byte*  p = (byte*) Scan0;
                 int  nOffset = stride - mDisplayImage.Width * 3;

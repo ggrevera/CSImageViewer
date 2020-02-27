@@ -110,8 +110,8 @@ namespace CSImageViewer {
             if (bpp == 8) {
                 unsafe {
                     byte*  p = (byte*) Scan0;
-                    int  nOffset = stride - w;
-                    int  i = 0;
+                    int    nOffset = stride - w;
+                    int    i = 0;
                     for (int y = 0; y < mH; y++) {
                         for (int x = 0; x < mW; x++) {
                             int  v = p[ 0 ];
@@ -133,8 +133,8 @@ namespace CSImageViewer {
             else if (bpp == 4) {
                 unsafe {
                     byte*  p = (byte*) Scan0;
-                    int  nOffset = stride - (w+1)/2;
-                    int  i = 0;
+                    int    nOffset = stride - (w+1)/2;
+                    int    i = 0;
                     for (int y = 0; y < mH; y++) {
                         for (int x = 0; x < mW; /*intentionally left blank*/) {
 
